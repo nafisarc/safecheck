@@ -1,0 +1,21 @@
+# Node dependencies
+node_modules/
+
+# Expo / RN build caches
+.expo/
+.expo-shared/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript/VSC caches
+dist/
+.vscode/
+.env
+
+# Expo / Android / iOS build output
+android/
+ios/
+web-build/
