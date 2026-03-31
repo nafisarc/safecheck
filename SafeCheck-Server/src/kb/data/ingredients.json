@@ -1,0 +1,757 @@
+[
+  {
+    "id": "glycerin",
+    "inci": "Glycerin",
+    "synonyms": [
+      "Glycerol"
+    ],
+    "functions": [
+      "humectant",
+      "solvent",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Glycerin as Used in Cosmetics (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/glycer_122014_FR.pdf"
+      }
+    ],
+    "tags": [
+      "humectant",
+      "hydration_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Hydrating humectant; commonly well tolerated."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "panthenol",
+    "inci": "Panthenol",
+    "synonyms": [
+      "D-Panthenol",
+      "Provitamin B5"
+    ],
+    "functions": [
+      "skin conditioning",
+      "humectant",
+      "soothing"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Panthenol, Pantothenic Acid, and Derivatives as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/pants122017FR.pdf"
+      }
+    ],
+    "tags": [
+      "humectant",
+      "soothing_support",
+      "barrier_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Often used for comfort/conditioning; typically gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "hyaluronic_acid",
+    "inci": "Hyaluronic Acid",
+    "synonyms": [
+      "Hyaluronan"
+    ],
+    "functions": [
+      "humectant",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "CIR's safety assessment for hyaluronates (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/FR_Hyaluronates_062023.pdf"
+      }
+    ],
+    "tags": [
+      "humectant",
+      "hydration_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Hydration-support ingredient; generally gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "sodium_hyaluronate",
+    "inci": "Sodium Hyaluronate",
+    "synonyms": [],
+    "functions": [
+      "humectant",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "CIR's safety assessment for hyaluronates (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/FR_Hyaluronates_062023.pdf"
+      }
+    ],
+    "tags": [
+      "humectant",
+      "hydration_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Common hyaluronate form; generally gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "ceramide_np",
+    "inci": "Ceramide NP",
+    "synonyms": [],
+    "functions": [
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Ceramides as Used in Cosmetics (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/cerami032015rep.pdf"
+      }
+    ],
+    "tags": [
+      "barrier_support",
+      "lipid_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Barrier-support lipid; commonly used for dryness support."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "ceramide_ap",
+    "inci": "Ceramide AP",
+    "synonyms": [],
+    "functions": [
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Ceramides as Used in Cosmetics (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/cerami032015rep.pdf"
+      }
+    ],
+    "tags": [
+      "barrier_support",
+      "lipid_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Barrier-support lipid; commonly used for dryness support."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "ceramide_eop",
+    "inci": "Ceramide EOP",
+    "synonyms": [],
+    "functions": [
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Ceramides as Used in Cosmetics (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/cerami032015rep.pdf"
+      }
+    ],
+    "tags": [
+      "barrier_support",
+      "lipid_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Barrier-support lipid; commonly used for dryness support."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "dimethicone",
+    "inci": "Dimethicone",
+    "synonyms": [],
+    "functions": [
+      "skin conditioning",
+      "emollient"
+    ],
+    "cir_sources": [
+      {
+        "title": "Amended Safety Assessment of Dimethicone, Methicone, and Substituted-Methicone Polymers as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/FAR_Methicones_032022.pdf"
+      }
+    ],
+    "tags": [
+      "emollient",
+      "occlusive_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Silicone emollient; generally well tolerated."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "cetyl_alcohol",
+    "inci": "Cetyl Alcohol",
+    "synonyms": [],
+    "functions": [
+      "emollient",
+      "viscosity controlling"
+    ],
+    "cir_sources": [
+      {
+        "title": "Final Report on the Safety Assessment of Aliphatic Alcohols as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/aliphs092012final.pdf"
+      }
+    ],
+    "tags": [
+      "fatty_alcohol",
+      "emollient",
+      "texture_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Fatty alcohol (not the drying kind); supports texture."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "cetearyl_alcohol",
+    "inci": "Cetearyl Alcohol",
+    "synonyms": [],
+    "functions": [
+      "emollient",
+      "viscosity controlling",
+      "emulsifying"
+    ],
+    "cir_sources": [
+      {
+        "title": "Final Report on the Safety Assessment of Aliphatic Alcohols as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/aliphs092012final.pdf"
+      }
+    ],
+    "tags": [
+      "fatty_alcohol",
+      "emollient",
+      "emulsifier",
+      "texture_support",
+      "generally_well_tolerated"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Fatty alcohol blend; supports texture."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "coco_betaine",
+    "inci": "Coco-Betaine",
+    "synonyms": [],
+    "functions": [
+      "surfactant",
+      "cleansing"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Alkyl Betaines as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/alkbet122013rep.pdf"
+      }
+    ],
+    "tags": [
+      "surfactant",
+      "cleanser_component"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "Surfactant; treat as caution for sensitive/rosacea/eczema/psoriasis."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "cocamidopropyl_betaine",
+    "inci": "Cocamidopropyl Betaine",
+    "synonyms": [],
+    "functions": [
+      "surfactant",
+      "cleansing"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Alkyl Betaines as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/alkbet122013rep.pdf"
+      }
+    ],
+    "tags": [
+      "surfactant",
+      "cleanser_component"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "Surfactant; treat as caution for sensitive/rosacea/eczema/psoriasis."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "disodium_laureth_sulfosuccinate",
+    "inci": "Disodium Laureth Sulfosuccinate",
+    "synonyms": [],
+    "functions": [
+      "surfactant",
+      "cleansing"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Sulfosuccinates as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/sulfos032012FR_0.pdf"
+      }
+    ],
+    "tags": [
+      "surfactant",
+      "cleanser_component"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "Cleansing surfactant; caution for very sensitive or dry skin."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "cocamidopropyl_hydroxysultaine",
+    "inci": "Cocamidopropyl Hydroxysultaine",
+    "synonyms": [],
+    "functions": [
+      "surfactant",
+      "cleansing"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Alkyl Sultaines as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/sultan032018final.pdf"
+      }
+    ],
+    "tags": [
+      "surfactant",
+      "cleanser_component"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "Cleansing surfactant; caution for sensitive profiles."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "citric_acid",
+    "inci": "Citric Acid",
+    "synonyms": [],
+    "functions": [
+      "buffering",
+      "pH adjuster"
+    ],
+    "cir_sources": [
+      {
+        "title": "On the Safety Assessment of Citric Acid, Inorganic Citrate Salts, and Alkyl Citrate Esters as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/citric032012FR.pdf"
+      }
+    ],
+    "tags": [
+      "ph_adjuster",
+      "potential_sting"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "pH adjuster; can sting on very sensitive skin depending on formula."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "sodium_hydroxide",
+    "inci": "Sodium Hydroxide",
+    "synonyms": [
+      "Lye"
+    ],
+    "functions": [
+      "pH adjuster",
+      "buffering"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Inorganic Hydroxides as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/inorganic%20hydroxides.pdf"
+      }
+    ],
+    "tags": [
+      "ph_adjuster",
+      "strong_ph_adjuster",
+      "potential_sting"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "Strong pH adjuster used at low levels; caution for very sensitive skin."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "salicylic_acid",
+    "inci": "Salicylic Acid",
+    "synonyms": [
+      "2-Hydroxybenzoic Acid"
+    ],
+    "functions": [
+      "exfoliant",
+      "anti-acne"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Salicylic Acid as Used in Cosmetics (Final Amended Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/salicy042019FAR.pdf"
+      }
+    ],
+    "tags": [
+      "active",
+      "exfoliant",
+      "bha",
+      "potential_sting"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "BHA exfoliant; higher caution for sensitive/rosacea/eczema/psoriasis/dry."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "glycolic_acid",
+    "inci": "Glycolic Acid",
+    "synonyms": [],
+    "functions": [
+      "exfoliant",
+      "buffering"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Alpha Hydroxy Acids as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/ahas.pdf"
+      }
+    ],
+    "tags": [
+      "active",
+      "exfoliant",
+      "aha",
+      "potential_sting"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "AHA exfoliant; higher caution for sensitive/rosacea/eczema/psoriasis."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "lactic_acid",
+    "inci": "Lactic Acid",
+    "synonyms": [],
+    "functions": [
+      "exfoliant",
+      "buffering"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Alpha Hydroxy Acids as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/ahas.pdf"
+      }
+    ],
+    "tags": [
+      "active",
+      "exfoliant",
+      "aha",
+      "potential_sting"
+    ],
+    "base_risk": "caution",
+    "risk_notes": [
+      "AHA exfoliant; higher caution for sensitive/rosacea/eczema/psoriasis."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "methylparaben",
+    "inci": "Methylparaben",
+    "synonyms": [],
+    "functions": [
+      "preservative"
+    ],
+    "cir_sources": [
+      {
+        "title": "Final Safety Assessment of Parabens as Used in Cosmetics (CIR web document)",
+        "url": "https://www.cir-safety.org/sites/default/files/paraben_web.pdf"
+      }
+    ],
+    "tags": [
+      "preservative",
+      "paraben"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Preservative; some users prefer to avoid parabens (optional preference)."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "propylparaben",
+    "inci": "Propylparaben",
+    "synonyms": [],
+    "functions": [
+      "preservative"
+    ],
+    "cir_sources": [
+      {
+        "title": "Final Safety Assessment of Parabens as Used in Cosmetics (CIR web document)",
+        "url": "https://www.cir-safety.org/sites/default/files/paraben_web.pdf"
+      }
+    ],
+    "tags": [
+      "preservative",
+      "paraben"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Preservative; some users prefer to avoid parabens (optional preference)."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "butylparaben",
+    "inci": "Butylparaben",
+    "synonyms": [],
+    "functions": [
+      "preservative"
+    ],
+    "cir_sources": [
+      {
+        "title": "Final Safety Assessment of Parabens as Used in Cosmetics (CIR web document)",
+        "url": "https://www.cir-safety.org/sites/default/files/paraben_web.pdf"
+      }
+    ],
+    "tags": [
+      "preservative",
+      "paraben"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Preservative; some users prefer to avoid parabens (optional preference)."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "methylisothiazolinone",
+    "inci": "Methylisothiazolinone",
+    "synonyms": [
+      "MI"
+    ],
+    "functions": [
+      "preservative"
+    ],
+    "cir_sources": [
+      {
+        "title": "Final Amended Safety Assessment of Methylisothiazolinone as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/MI092020FAR.pdf"
+      }
+    ],
+    "tags": [
+      "preservative",
+      "sensitizer_flag",
+      "high_attention"
+    ],
+    "base_risk": "high",
+    "risk_notes": [
+      "Higher attention preservative; treat as high for sensitive/eczema/rosacea/psoriasis."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "trisodium_edds",
+    "inci": "Trisodium Ethylenediamine Disuccinate",
+    "synonyms": [
+      "Trisodium EDDS"
+    ],
+    "functions": [
+      "chelating"
+    ],
+    "cir_sources": [
+      {
+        "title": "Trisodium Ethylenediamine Disuccinate - CIR Report Data Sheet (Final Report)",
+        "url": "https://www.cir-safety.org/sites/default/files/FR_TrisodiumEthylenediamineDisuccinate_032023.pdf"
+      }
+    ],
+    "tags": [
+      "chelator",
+      "formula_support"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Chelator used at low levels for stability."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "zinc_gluconate",
+    "inci": "Zinc Gluconate",
+    "synonyms": [],
+    "functions": [
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Zinc Salts as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/zinc%20salts_0.pdf"
+      }
+    ],
+    "tags": [
+      "mineral_salt",
+      "skin_conditioning"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Zinc salt; generally well tolerated."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "sodium_pca",
+    "inci": "Sodium PCA",
+    "synonyms": [
+      "PCA (salt)"
+    ],
+    "functions": [
+      "humectant",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of PCA and Its Salts as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/pca.pdf"
+      }
+    ],
+    "tags": [
+      "humectant",
+      "hydration_support"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Humectant; typically gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "cholesterol",
+    "inci": "Cholesterol",
+    "synonyms": [],
+    "functions": [
+      "emollient",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Cholesterol as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/RR_Cholesterol.pdf"
+      }
+    ],
+    "tags": [
+      "lipid_support",
+      "barrier_support"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Barrier-support lipid; typically gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "tocopherol",
+    "inci": "Tocopherol",
+    "synonyms": [
+      "Vitamin E"
+    ],
+    "functions": [
+      "antioxidant",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Tocopherols and Tocotrienols as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/tocopherols.pdf"
+      }
+    ],
+    "tags": [
+      "antioxidant",
+      "skin_conditioning"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Antioxidant; typically gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "xanthan_gum",
+    "inci": "Xanthan Gum",
+    "synonyms": [],
+    "functions": [
+      "viscosity controlling",
+      "stabilizer"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Microbial Polysaccharide Gums as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/microb092012rep.pdf"
+      }
+    ],
+    "tags": [
+      "thickener",
+      "stabilizer"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Texture/stability ingredient; low concern."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  },
+  {
+    "id": "squalane",
+    "inci": "Squalane",
+    "synonyms": [],
+    "functions": [
+      "emollient",
+      "skin conditioning"
+    ],
+    "cir_sources": [
+      {
+        "title": "Safety Assessment of Squalane and Squalene as Used in Cosmetics",
+        "url": "https://www.cir-safety.org/sites/default/files/Squalene%20and%20Squalane.pdf"
+      }
+    ],
+    "tags": [
+      "emollient",
+      "lipid_support"
+    ],
+    "base_risk": "low",
+    "risk_notes": [
+      "Emollient lipid; typically gentle."
+    ],
+    "kb_note": "base_risk/tags are SafeCheck demo scoring fields (not medical advice). CIR links provide safety assessment sources."
+  }
+]

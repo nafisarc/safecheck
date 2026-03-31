@@ -10,6 +10,34 @@ const uri = process.env.MONGO_URI;
 app.use(cors());
 app.use(express.json());
 
+// Load knowledge base JSON
+const ingredientsKb = require("./kb/data/ingredients.json");
+
+// Helper: normalize ingredient strings for matching
+function normalize(str = "") {
+  return String(str)
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+// Build a lookup map:
+// key = normalized inci OR normalized synonym
+// value = ingredient object from ingredientsKb
+const ingredientIndex = new Map();
+
+for (const ing of ingredientsKb) {
+  // Match the main INCI name
+  ingredientIndex.set(normalize(ing.inci), ing);
+
+  // Match synonyms too (if any)
+  if (Array.isArray(ing.synonyms)) {
+    for (const syn of ing.synonyms) {
+      ingredientIndex.set(normalize(syn), ing);
+    }
+  }
+}
+
 let db;
 
 // Connect to MongoDB and start server
@@ -59,28 +87,34 @@ app.get("/api/profile/:email", async (req, res) => {
   }
 });
 
-// --- Ingredient Safety Check ---
-const knowledge = [
-  { name: "Methylparaben", risk: "Medium", concern: "Can irritate sensitive skin" },
-  { name: "Sodium Lauryl Sulfate", risk: "High", concern: "Common irritant for eczema" },
-  { name: "Fragrance", risk: "Medium", concern: "May contain allergens" },
-];
-
 app.post("/api/check", async (req, res) => {
   try {
-    const { ingredients = [], profile = {} } = req.body;
-    const results = ingredients.map((name) => {
-      const match = knowledge.find(
-        (k) => k.name.toLowerCase() === name.trim().toLowerCase()
-      );
-      if (!match) return { name, risk: "Unknown", concern: "Not found in database" };
-      const personalized =
-        profile?.avoidList?.includes(match.name) ||
-        profile?.allergies?.includes(match.name)
-          ? "High"
-          : match.risk;
-      return { ...match, personalized };
+    const { ingredients = [] } = req.body;
+
+    const results = ingredients.map((rawName) => {
+      const key = normalize(rawName);
+      const match = ingredientIndex.get(key);
+
+      if (!match) {
+        return {
+          input: rawName,
+          status: "unknown",
+          base_risk: "unknown",
+          risk_notes: ["Not found in knowledge base yet."]
+        };
+      }
+
+      return {
+        input: rawName,
+        status: "matched",
+        inci: match.inci,
+        base_risk: match.base_risk,
+        risk_notes: match.risk_notes,
+        tags: match.tags,
+        cir_sources: match.cir_sources
+      };
     });
+
     res.send({ results });
   } catch (e) {
     res.status(500).send({ error: e.message });

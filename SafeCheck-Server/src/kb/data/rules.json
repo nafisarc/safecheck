@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "risk_levels": [
+    "low",
+    "caution",
+    "high"
+  ],
+  "risk_rank": {
+    "low": 0,
+    "caution": 1,
+    "high": 2
+  },
+  "scoring_method": [
+    "Start from ingredient.base_risk.",
+    "Apply profile-based escalation rules using ingredient.tags.",
+    "Never lower risk (only escalate).",
+    "Final risk is the highest level triggered."
+  ],
+  "profile_rules": {
+    "sensitive": {
+      "to_caution_if_tags": [
+        "surfactant",
+        "ph_adjuster",
+        "potential_sting",
+        "strong_ph_adjuster"
+      ],
+      "to_high_if_tags": [
+        "sensitizer_flag",
+        "aha",
+        "bha",
+        "exfoliant",
+        "active"
+      ]
+    },
+    "rosacea": {
+      "to_high_if_tags": [
+        "aha",
+        "bha",
+        "exfoliant",
+        "active",
+        "sensitizer_flag"
+      ],
+      "to_caution_if_tags": [
+        "surfactant",
+        "potential_sting",
+        "strong_ph_adjuster"
+      ]
+    },
+    "eczema": {
+      "to_high_if_tags": [
+        "aha",
+        "bha",
+        "exfoliant",
+        "active",
+        "sensitizer_flag"
+      ],
+      "to_caution_if_tags": [
+        "surfactant",
+        "potential_sting",
+        "strong_ph_adjuster"
+      ]
+    },
+    "psoriasis": {
+      "to_high_if_tags": [
+        "aha",
+        "bha",
+        "exfoliant",
+        "active",
+        "sensitizer_flag"
+      ],
+      "to_caution_if_tags": [
+        "surfactant",
+        "potential_sting",
+        "strong_ph_adjuster"
+      ]
+    },
+    "dry": {
+      "to_caution_if_tags": [
+        "surfactant",
+        "exfoliant",
+        "aha",
+        "bha",
+        "potential_sting",
+        "strong_ph_adjuster"
+      ]
+    },
+    "oily": {
+      "notes": "No automatic escalation for oily alone in this MVP."
+    },
+    "acne_prone": {
+      "notes": "No automatic escalation for acne_prone alone in this MVP (avoid false assumptions)."
+    }
+  },
+  "ingredient_id_overrides": {
+    "methylisothiazolinone": {
+      "always_at_least": "high",
+      "reason": "Ingredient has tags: sensitizer_flag/high_attention."
+    }
+  },
+  "output_fields": {
+    "include_triggered_profile_rules": true,
+    "include_matched_tags": true,
+    "include_risk_notes": true
+  }
+}

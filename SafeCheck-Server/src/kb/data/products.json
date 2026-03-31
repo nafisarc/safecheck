@@ -1,0 +1,625 @@
+[
+  {
+    "id": "cerave_hydrating_cleanser",
+    "brand": "CeraVe",
+    "name": "Hydrating Cleanser",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cerave-hydrating-cleanser-2"
+    },
+    "ingredients_inci": [
+      "Aqua/Water",
+      "Glycerin",
+      "Cetearyl Alcohol",
+      "Phenoxyethanol",
+      "Stearyl Alcohol",
+      "Cetyl Alcohol",
+      "Potassium Phosphate",
+      "Ceramide NP",
+      "Cocamidopropyl Betaine",
+      "Carbomer",
+      "Propylene Glycol",
+      "Methylparaben",
+      "Sodium Lauroyl Lactylate",
+      "Sodium Hyaluronate",
+      "Cholesterol",
+      "Disodium EDTA",
+      "Dipotassium Phosphate",
+      "Propylparaben",
+      "Phytosphingosine",
+      "Xanthan Gum"
+    ]
+  },
+  {
+    "id": "cerave_foaming_cleanser",
+    "brand": "CeraVe",
+    "name": "Foaming Cleanser",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cerave-foaming-cleanser-4"
+    },
+    "ingredients_inci": [
+      "Aqua/Water",
+      "Cocamidopropyl Hydroxysultaine",
+      "Sodium Lauroyl Sarcosinate",
+      "Propanediol",
+      "PEG-150 Pentaerythrityl Tetrastearate",
+      "PEG-6 Caprylic/Capric Glycerides",
+      "Glycerin",
+      "Ceramide NP",
+      "Ceramide AP",
+      "Ceramide EOP",
+      "Carbomer",
+      "Niacinamide",
+      "Sodium Methyl Cocoyl Taurate",
+      "Sodium Benzoate",
+      "Sodium Chloride",
+      "Sodium Lauroyl Lactylate",
+      "Sodium Hyaluronate",
+      "Cholesterol",
+      "Phenoxyethanol",
+      "Disodium EDTA",
+      "Citric Acid",
+      "Phytosphingosine",
+      "Xanthan Gum",
+      "Ethylhexylglycerin"
+    ]
+  },
+  {
+    "id": "cerave_moisturizing_cream",
+    "brand": "CeraVe",
+    "name": "Moisturizing Cream",
+    "category": "Moisturizer",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cerave-moisturizing-cream"
+    },
+    "ingredients_inci": [
+      "Aqua",
+      "Glycerin",
+      "Cetearyl Alcohol",
+      "Caprylic/Capric Triglyceride",
+      "Cetyl Alcohol",
+      "Ceteareth-20",
+      "Petrolatum",
+      "Potassium Phosphate",
+      "Ceramide NP",
+      "Ceramide AP",
+      "Ceramide EOP",
+      "Carbomer",
+      "Dimethicone",
+      "Behentrimonium Methosulfate",
+      "Sodium Lauroyl Lactylate",
+      "Sodium Hyaluronate",
+      "Cholesterol",
+      "Phenoxyethanol",
+      "Disodium EDTA",
+      "Dipotassium Phosphate",
+      "Tocopherol",
+      "Phytosphingosine",
+      "Xanthan Gum",
+      "Ethylhexylglycerin"
+    ]
+  },
+  {
+    "id": "cerave_pm_facial_moisturizing_lotion",
+    "brand": "CeraVe",
+    "name": "PM Facial Moisturizing Lotion",
+    "category": "Moisturizer",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cerave-pm-facial-moisturizing-lotion"
+    },
+    "ingredients_inci": [
+      "Aqua/Water/Eau",
+      "Glycerin",
+      "Caprylic/Capric Triglyceride",
+      "Niacinamide",
+      "Cetearyl Alcohol",
+      "Potassium Phosphate",
+      "Ceramide NP",
+      "Ceramide AP",
+      "Ceramide EOP",
+      "Carbomer",
+      "Dimethicone",
+      "Ceteareth-20",
+      "Behentrimonium Methosulfate",
+      "Sodium Lauroyl Lactylate",
+      "Sodium Hyaluronate",
+      "Cholesterol",
+      "Phenoxyethanol",
+      "Disodium EDTA",
+      "Dipotassium Phosphate",
+      "Caprylyl Glycol",
+      "Phytosphingosine",
+      "Xanthan Gum",
+      "Polyglyceryl-3 Diisostearate",
+      "Ethylhexylglycerin"
+    ]
+  },
+  {
+    "id": "cerave_healing_ointment",
+    "brand": "CeraVe",
+    "name": "Healing Ointment",
+    "category": "Ointment",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cerave-healing-ointment-2"
+    },
+    "active_ingredients": [
+      {
+        "inci": "Petrolatum",
+        "concentration_percent": 46.5
+      }
+    ],
+    "ingredients_inci": [
+      "Mineral Oil",
+      "Paraffin",
+      "Ozokerite",
+      "Dimethicone",
+      "Ceramide NP",
+      "Ceramide AP",
+      "Ceramide EOP",
+      "Carbomer",
+      "Water",
+      "Sodium Lauroyl Lactylate",
+      "Proline",
+      "Cholesterol",
+      "Phenoxyethanol",
+      "Tocopheryl Acetate",
+      "Tocopherol",
+      "Hydrolyzed Hyaluronic Acid",
+      "Panthenol",
+      "Pantolactone",
+      "Phytosphingosine",
+      "Xanthan Gum",
+      "Ethylhexylglycerin"
+    ]
+  },
+  {
+    "id": "cerave_daily_moisturizing_lotion",
+    "brand": "CeraVe",
+    "name": "Daily Moisturizing Lotion",
+    "category": "Moisturizer",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cerave-daily-moisturizing-lotion-discontinued"
+    },
+    "ingredients_inci": [
+      "Aqua/Water/Eau",
+      "Glycerin",
+      "Caprylic/Capric Triglyceride",
+      "Cetearyl Alcohol",
+      "Cetyl Alcohol",
+      "Potassium Phosphate",
+      "Ceramide NP",
+      "Ceramide AP",
+      "Ceramide EOP",
+      "Carbomer",
+      "Dimethicone",
+      "Ceteareth-20",
+      "Behentrimonium Methosulfate",
+      "Methylparaben",
+      "Sodium Lauroyl Lactylate",
+      "Cholesterol",
+      "Disodium EDTA",
+      "Dipotassium Phosphate",
+      "Propylparaben",
+      "Hydrolyzed Hyaluronic Acid",
+      "Phytosphingosine",
+      "Xanthan Gum",
+      "Polysorbate 20",
+      "Polyglyceryl-3 Diisostearate"
+    ]
+  },
+  {
+    "id": "cetaphil_gentle_skin_cleanser",
+    "brand": "Cetaphil",
+    "name": "Gentle Skin Cleanser",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cetaphil-gentle-skin-cleanser"
+    },
+    "ingredients_inci": [
+      "Aqua",
+      "Glycerin",
+      "Panthenol",
+      "Niacinamide",
+      "Tocopherol",
+      "Sodium Hydroxide",
+      "Citric Acid"
+    ]
+  },
+  {
+    "id": "cetaphil_daily_facial_cleanser_fragrance_free",
+    "brand": "Cetaphil",
+    "name": "Daily Facial Cleanser (Fragrance Free)",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cetaphil-daily-facial-cleanser-fragrance-free"
+    },
+    "ingredients_inci": [
+      "Water",
+      "Glycerin",
+      "Cocamidopropyl Betaine",
+      "Disodium Laureth Sulfosuccinate",
+      "Sodium Cocoamphoacetate",
+      "Panthenol",
+      "Niacinamide",
+      "Pantolactone",
+      "Acrylates/C10-30 Alkyl Acrylate Crosspolymer",
+      "Sodium Benzoate",
+      "Sodium Chloride",
+      "Citric Acid"
+    ]
+  },
+  {
+    "id": "cetaphil_moisturizing_lotion",
+    "brand": "Cetaphil",
+    "name": "Moisturizing Lotion",
+    "category": "Moisturizer",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cetaphil-moisturizing-lotion"
+    },
+    "ingredients_inci": [
+      "Water",
+      "Glycerin",
+      "Isopropyl Palmitate",
+      "Cetearyl Alcohol",
+      "Ceteareth-20",
+      "Panthenol",
+      "Niacinamide",
+      "Tocopheryl Acetate",
+      "Dimethicone",
+      "Persea Gratissima (Avocado) Oil",
+      "Helianthus Annuus (Sunflower) Seed Oil",
+      "Pantolactone",
+      "Glyceryl Stearate",
+      "Sodium Benzoate",
+      "Benzyl Alcohol",
+      "Citric Acid"
+    ]
+  },
+  {
+    "id": "cetaphil_moisturizing_cream",
+    "brand": "Cetaphil",
+    "name": "Moisturizing Cream",
+    "category": "Moisturizer",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/cetaphil-moisturizing-cream"
+    },
+    "ingredients_inci": [
+      "Water",
+      "Glycerin",
+      "Petrolatum",
+      "Dicaprylyl Ether",
+      "Dimethicone",
+      "Glyceryl Stearate",
+      "Cetyl Alcohol",
+      "Prunus Amygdalus Dulcis (Sweet Almond) Oil",
+      "PEG-30 Stearate",
+      "Tocopheryl Acetate",
+      "Acrylates/C10-30 Alkyl Acrylate Crosspolymer",
+      "Dimethiconol",
+      "Benzyl Alcohol",
+      "Phenoxyethanol",
+      "Glyceryl Acrylate/Acrylic Acid Copolymer",
+      "Propylene Glycol",
+      "Disodium EDTA",
+      "Sodium Hydroxide"
+    ]
+  },
+  {
+    "id": "lrp_toleriane_hydrating_gentle_cleanser",
+    "brand": "La Roche-Posay",
+    "name": "Toleriane Hydrating Gentle Cleanser",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/la-roche-posay-toleriane-hydrating-gentle-cleanser-3"
+    },
+    "ingredients_inci": [
+      "Aqua/Water/Eau",
+      "Glycerin",
+      "Pentaerythrityl Tetraethylhexanoate",
+      "Propanediol",
+      "Ammonium Polyacryloyldimethyl Taurate",
+      "Polysorbate 60",
+      "Ceramide NP",
+      "Niacinamide",
+      "Sodium Chloride",
+      "Coco-Betaine",
+      "Disodium EDTA",
+      "Caprylyl Glycol",
+      "Panthenol",
+      "Tocopherol"
+    ]
+  },
+  {
+    "id": "lrp_toleriane_purifying_foaming_cleanser",
+    "brand": "La Roche-Posay",
+    "name": "Toleriane Purifying Foaming Cleanser",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/la-roche-posay-toleriane-purifying-foaming-cleanser"
+    },
+    "ingredients_inci": [
+      "Water (La Roche-Posay Prebiotic Thermal Water)",
+      "Glycerin",
+      "Coco-Betaine",
+      "Propylene Glycol",
+      "Sodium Cocoyl Glycinate",
+      "PEG-120 Methyl Glucose Dioleate",
+      "Sodium Chloride",
+      "Ceramide NP",
+      "Niacinamide",
+      "Sodium Hydroxide",
+      "Disodium EDTA",
+      "Capryloyl Glycine",
+      "Caprylyl Glycol",
+      "Citric Acid",
+      "Acrylates Copolymer"
+    ]
+  },
+  {
+    "id": "lrp_toleriane_double_repair_moisturizer",
+    "brand": "La Roche-Posay",
+    "name": "Toleriane Double Repair Moisturizer",
+    "category": "Moisturizer",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/la-roche-posay-toleriane-double-repair"
+    },
+    "ingredients_inci": [
+      "Aqua/Water (La Roche-Posay Prebiotic Thermal Water)",
+      "Glycerin",
+      "Dimethicone",
+      "Hydrogenated Polyisobutene",
+      "Niacinamide",
+      "Ammonium Polyacryloyldimethyl Taurate",
+      "Myristyl Myristate",
+      "Stearic Acid",
+      "Ceramide NP",
+      "Potassium Cetyl Phosphate",
+      "Isobutane",
+      "Glyceryl Stearate SE",
+      "Sodium Hydroxide",
+      "Myristic Acid",
+      "Palmitic Acid",
+      "Capryloyl Glycine",
+      "Caprylyl Glycol",
+      "Xanthan Gum",
+      "T-Butyl Alcohol",
+      "Acrylonitrile/Methyl Methacrylate/Vinylidene Chloride Copolymer",
+      "Tocopherol"
+    ]
+  },
+  {
+    "id": "lrp_cicaplast_baume_b5_plus_2022",
+    "brand": "La Roche-Posay",
+    "name": "Cicaplast Baume B5+ (2022 Reformulation)",
+    "category": "Balm",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/la-roche-posay-cicaplast-baume-b5-2022-reformulation"
+    },
+    "ingredients_inci": [
+      "Aqua/Water/Eau",
+      "Hydrogenated Polyisobutene",
+      "Dimethicone",
+      "Glycerin",
+      "Butyrospermum Parkii Butter/Shea Butter",
+      "Panthenol",
+      "Zea Mays Starch / Corn Starch",
+      "Propanediol",
+      "Butylene Glycol",
+      "Cetyl PEG/PPG-10/1 Dimethicone",
+      "Trihydroxystearin",
+      "Centella Asiatica Leaf Extract",
+      "Polymnia Sonchifolia Root Juice",
+      "Zinc Gluconate",
+      "Madecassoside",
+      "Manganese Gluconate",
+      "Alpha-Glucan Oligosaccharide",
+      "Silica",
+      "Aluminum Hydroxide",
+      "Magnesium Sulfate",
+      "Mannose",
+      "Capryloyl Glycine",
+      "Caprylyl Glycol",
+      "Vitreoscilla Ferment",
+      "Citric Acid",
+      "Trisodium Ethylenediamine Disuccinate",
+      "Lactobacillus",
+      "Acetylated Glycol Stearate",
+      "Maltodextrin",
+      "Polyglyceryl-4 Isostearate",
+      "Tocopherol",
+      "Pentaerythrityl Tetra-Di-T-Butyl Hydroxyhydrocinnamate",
+      "CI 77891/Titanium Dioxide"
+    ]
+  },
+  {
+    "id": "lrp_effaclar_purifying_foaming_gel",
+    "brand": "La Roche-Posay",
+    "name": "Effaclar Purifying Foaming Gel",
+    "category": "Cleanser",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/la-roche-posay-effaclar-purifying-foaming-gel"
+    },
+    "ingredients_inci": [
+      "Water",
+      "Sodium Laureth Sulfate",
+      "PEG-8",
+      "Coco-Betaine",
+      "Hexylene Glycol",
+      "Sodium Chloride",
+      "PEG-120 Methyl Glucose Dioleate",
+      "Zinc PCA",
+      "Sodium Hydroxide",
+      "Citric Acid",
+      "Sodium Benzoate",
+      "Phenoxyethanol",
+      "Caprylyl Glycol",
+      "Parfum/Fragrance"
+    ]
+  },
+  {
+    "id": "lrp_anthelios_melt_in_milk_spf60",
+    "brand": "La Roche-Posay",
+    "name": "Anthelios Melt-in Milk Sunscreen SPF 60",
+    "category": "Sunscreen",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/la-roche-posay-anthelios-melt-in-milk-sunscreen-spf-60"
+    },
+    "notes": "Incidecoder page shows active ingredients; full INCI can vary by region and reformulation—verify on packaging for your demo.",
+    "active_ingredients": [
+      {
+        "inci": "Homosalate",
+        "concentration_percent": 10.0
+      },
+      {
+        "inci": "Ethylhexyl Salicylate",
+        "concentration_percent": 5.0
+      },
+      {
+        "inci": "Octocrylene",
+        "concentration_percent": 7.0
+      }
+    ],
+    "ingredients_inci": []
+  },
+  {
+    "id": "ordinary_niacinamide_10_zinc_1",
+    "brand": "The Ordinary",
+    "name": "Niacinamide 10% + Zinc 1%",
+    "category": "Serum",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/the-ordinary-niacinamide-10-zinc-1-serum1"
+    },
+    "ingredients_inci": [
+      "Aqua (Water)",
+      "Niacinamide 10.0%",
+      "Pentylene Glycol",
+      "Zinc PCA 1.0%",
+      "Dimethyl Isosorbide",
+      "Tamarindus Indica Seed Gum",
+      "Xanthan Gum",
+      "Isoceteth-20",
+      "Ethoxydiglycol",
+      "Phenoxyethanol",
+      "Chlorphenesin"
+    ]
+  },
+  {
+    "id": "ordinary_hyaluronic_acid_2_b5",
+    "brand": "The Ordinary",
+    "name": "Hyaluronic Acid 2% + B5",
+    "category": "Serum",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/the-ordinary-hyaluronic-acid-2-b5"
+    },
+    "ingredients_inci": [
+      "Aqua (Water)",
+      "Sodium Hyaluronate",
+      "Pentylene Glycol",
+      "Propanediol",
+      "Sodium Hyaluronate Crosspolymer",
+      "Panthenol",
+      "Ahnfeltia Concinna Extract",
+      "Glycerin",
+      "Trisodium Ethylenediamine Disuccinate",
+      "Citric Acid",
+      "Isoceteth-20",
+      "Ethoxydiglycol",
+      "Ethylhexylglycerin",
+      "Hexylene Glycol",
+      "1,2-Hexanediol",
+      "Phenoxyethanol",
+      "Caprylyl Glycol"
+    ]
+  },
+  {
+    "id": "ordinary_glycolic_acid_7_toning_solution",
+    "brand": "The Ordinary",
+    "name": "Glycolic Acid 7% Toning Solution",
+    "category": "Toner",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/the-ordinary-glycolic-acid-7-toning-solution"
+    },
+    "ingredients_inci": [
+      "Aqua (Water)",
+      "Glycolic Acid",
+      "Rosa Damascena Flower Water",
+      "Centaurea Cyanus Flower Water",
+      "Aloe Barbadensis Leaf Water",
+      "Propanediol",
+      "Glycerin",
+      "Triethanolamine",
+      "Aminomethyl Propanol",
+      "Panax Ginseng Root Extract",
+      "Tasmannia Lanceolata Fruit/Leaf Extract",
+      "Aspartic Acid",
+      "Alanine",
+      "Glycine",
+      "Serine",
+      "Valine",
+      "Isoleucine",
+      "Proline",
+      "Threonine",
+      "Histidine",
+      "Phenylalanine",
+      "Glutamic Acid",
+      "Arginine",
+      "PCA",
+      "Sodium PCA",
+      "Sodium Lactate",
+      "Fructose",
+      "Glucose",
+      "Sucrose",
+      "Urea",
+      "Hexyl Nicotinate",
+      "Dextrin",
+      "Citric Acid",
+      "Polysorbate 20",
+      "Gellan Gum",
+      "Trisodium Ethylenediamine Disuccinate",
+      "Sodium Chloride",
+      "Hexylene Glycol",
+      "Potassium Sorbate",
+      "Sodium Benzoate",
+      "1,2-Hexanediol",
+      "Caprylyl Glycol"
+    ]
+  },
+  {
+    "id": "ordinary_retinol_0_2_in_squalane",
+    "brand": "The Ordinary",
+    "name": "Retinol 0.2% in Squalane",
+    "category": "Serum",
+    "source": {
+      "type": "incidecoder",
+      "url": "https://incidecoder.com/products/the-ordinary-retinol-0-2-in-squalane-discontinued"
+    },
+    "ingredients_inci": [
+      "Squalane",
+      "Caprylic/Capric Triglyceride",
+      "Retinol 0.2%",
+      "Solanum Lycopersicum (Tomato) Fruit Extract",
+      "Simmondsia Chinensis (Jojoba) Seed Oil",
+      "BHT"
+    ]
+  }
+]

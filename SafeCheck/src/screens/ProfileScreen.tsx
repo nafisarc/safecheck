@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TextInput, Pressable, Switch } from "react-native";
+import api from "../services/api";
 
 export default function ProfileScreen({ navigation }: any) {
   // Basic info
@@ -41,18 +42,23 @@ export default function ProfileScreen({ navigation }: any) {
     setAvoidList(avoidList.filter((i) => i !== item));
   };
 
-  const onSaveProfile = () => {
-    // later: persist into storage (AsyncStorage/Mongo)
-    const profileData = {
-      age,
-      gender,
-      skinConditions,
-      allergies,
-      skinSensitivity,
-      avoidList,
-    };
-    console.log("Saved profile:", profileData);
+  const onSaveProfile = async () => {
+  const profileData = {
+    email: "test@example.com", // TEMP: replace later with logged-in email
+    age,
+    gender,
+    skinConditions,
+    allergies,
+    skinSensitivity,
+    avoidList,
+  };
+
+  try {
+    await api.post("/api/profile", profileData);
     navigation.navigate("Home");
+  } catch (e: any) {
+    console.log("Save profile error:", e.message);
+  }
   };
 
   return (
