@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, Pressable, ScrollView, TextInput, ActivityIndicator } from "react-native";
+import { View, Text, Pressable, ScrollView, TextInput, ActivityIndicator, Keyboard } from "react-native";
 import api from "../services/api"; // adjust if your api.ts is elsewhere
 
 function splitIngredients(raw: string): string[] {
@@ -14,7 +14,7 @@ function splitIngredients(raw: string): string[] {
 
 export default function ManualScreen({ navigation, route }: any) {
   // Optional: pass profileFlags from previous screen later
-  const profileFlags: string[] = route?.params?.profileFlags || [];
+  const profileFlags: string[] = ["eczema"];
 
   const [rawText, setRawText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,6 +23,7 @@ export default function ManualScreen({ navigation, route }: any) {
   const parsedList = useMemo(() => splitIngredients(rawText), [rawText]);
 
   const onAnalyze = async () => {
+    Keyboard.dismiss();
     setErrorMsg("");
 
     if (parsedList.length === 0) {
@@ -42,6 +43,7 @@ export default function ManualScreen({ navigation, route }: any) {
       navigation.navigate("Result", {
         payload: res.data,
         inputIngredients: parsedList,
+        profileFlags,
       });
     } catch (e: any) {
       setErrorMsg(e?.message || "Something went wrong. Try again.");

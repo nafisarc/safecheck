@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TextInput, Pressable, Switch } from "react-native";
 import api from "../services/api";
+import BottomNavBar from "../components/BottomNavBar"; 
+
 
 export default function ProfileScreen({ navigation }: any) {
   // Basic info
@@ -62,10 +64,12 @@ export default function ProfileScreen({ navigation }: any) {
   };
 
   return (
+    <View style={{ flex: 1, backgroundColor: "white" }}>
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
         padding: 24,
+        paddingBottom: 100,
         backgroundColor: "white",
       }}
     >
@@ -78,7 +82,7 @@ export default function ProfileScreen({ navigation }: any) {
           textAlign: "center",
         }}
       >
-        Your Profile
+        Tailor just for you!
       </Text>
 
       {/* Basic Info */}
@@ -288,5 +292,7 @@ export default function ProfileScreen({ navigation }: any) {
         Data is stored locally for personalization only.
       </Text>
     </ScrollView>
+    <BottomNavBar navigation={navigation} activeTab="profile" />
+    </View>
   );
 }

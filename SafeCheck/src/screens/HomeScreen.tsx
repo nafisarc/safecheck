@@ -70,7 +70,7 @@ export default function HomeScreen({ navigation }: any) {
 
         {/* Continue as Guest */}
         <Pressable
-          onPress={() => navigation.replace("CheckProduct")}
+          onPress={() => navigation.replace("Main")}
           style={{
             padding: 14,
             borderRadius: 12,
