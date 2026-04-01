@@ -38,6 +38,26 @@ for (const ing of ingredientsKb) {
   }
 }
 
+const rules = require("./kb/data/rules.json");
+
+function riskMax(a, b) {
+  const rank = rules.risk_rank;
+  return rank[b] > rank[a] ? b : a;
+}
+
+// profileFlags can come as ["sensitive","rosacea"] etc.
+// or as an object { sensitive:true, rosacea:true }
+function getActiveFlags(profileFlags, profileObj) {
+  if (Array.isArray(profileFlags)) return profileFlags;
+
+  // if profile is an object with booleans
+  if (profileObj && typeof profileObj === "object") {
+    return Object.keys(rules.profile_rules).filter((k) => profileObj[k] === true);
+  }
+
+  return [];
+}
+
 let db;
 
 // Connect to MongoDB and start server
@@ -89,7 +109,9 @@ app.get("/api/profile/:email", async (req, res) => {
 
 app.post("/api/check", async (req, res) => {
   try {
-    const { ingredients = [] } = req.body;
+    const { ingredients = [], profileFlags, profile } = req.body;
+
+    const activeFlags = getActiveFlags(profileFlags, profile);
 
     const results = ingredients.map((rawName) => {
       const key = normalize(rawName);
@@ -99,9 +121,42 @@ app.post("/api/check", async (req, res) => {
         return {
           input: rawName,
           status: "unknown",
-          base_risk: "unknown",
-          risk_notes: ["Not found in knowledge base yet."]
+          final_risk: "unknown",
+          reasons: ["Not found in knowledge base yet."]
         };
+      }
+
+      let finalRisk = match.base_risk || "caution";
+      const reasons = [];
+
+      // apply rules per user flag
+      for (const flag of activeFlags) {
+        const rule = rules.profile_rules[flag];
+        if (!rule) continue;
+
+        const tags = match.tags || [];
+
+        const hitHigh = (rule.to_high_if_tags || []).some((t) => tags.includes(t));
+        const hitCaution = (rule.to_caution_if_tags || []).some((t) => tags.includes(t));
+
+        if (hitHigh) {
+          finalRisk = riskMax(finalRisk, "high");
+          reasons.push(`Because you selected "${flag}", this ingredient matches a higher-risk tag.`);
+        } else if (hitCaution) {
+          finalRisk = riskMax(finalRisk, "caution");
+          reasons.push(`Because you selected "${flag}", this ingredient matches a caution tag.`);
+        }
+      }
+
+      // ingredient overrides (like MI always high)
+      if (rules.ingredient_id_overrides?.[match.id]?.always_at_least) {
+        finalRisk = riskMax(finalRisk, rules.ingredient_id_overrides[match.id].always_at_least);
+        reasons.push(rules.ingredient_id_overrides[match.id].reason);
+      }
+
+      // add your ingredient notes
+      if (Array.isArray(match.risk_notes)) {
+        reasons.push(...match.risk_notes);
       }
 
       return {
@@ -109,13 +164,21 @@ app.post("/api/check", async (req, res) => {
         status: "matched",
         inci: match.inci,
         base_risk: match.base_risk,
-        risk_notes: match.risk_notes,
+        final_risk: finalRisk,
         tags: match.tags,
-        cir_sources: match.cir_sources
+        cir_sources: match.cir_sources,
+        reasons
       };
     });
 
-    res.send({ results });
+    // overall risk = highest final_risk among matched
+    const overallRisk = results.reduce((acc, r) => {
+      if (!r.final_risk || r.final_risk === "unknown") return acc;
+      if (!rules.risk_rank[r.final_risk]) return acc;
+      return riskMax(acc, r.final_risk);
+    }, "low");
+
+    res.send({ overall_risk: overallRisk, results });
   } catch (e) {
     res.status(500).send({ error: e.message });
   }

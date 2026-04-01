@@ -38,11 +38,11 @@ export default function CheckProductScreen({ navigation }: any) {
         {/* Main vertical buttons */}
         <View style={styles.buttonsContainer}>
           <Pressable
-            onPress={() => navigation.navigate("CheckIngredient")}
+            onPress={() => navigation.navigate("Manual")}
             style={[styles.mainButton, { backgroundColor: "#8d67b9ff" }]}
           >
             <Ionicons name="flask-outline" size={100} color="white" />
-            <Text style={[styles.buttonText, { color: "white" }]}>Check an Ingredient</Text>
+            <Text style={[styles.buttonText, { color: "white" }]}>Type a Product or Ingredient</Text>
           </Pressable>
 
           <Pressable
@@ -56,7 +56,7 @@ export default function CheckProductScreen({ navigation }: any) {
             ]}
           >
             <Ionicons name="camera-outline" size={100} color="#4c217dff" />
-            <Text style={[styles.buttonText, { color: "#4c217dff" }]}>Check a Product</Text>
+            <Text style={[styles.buttonText, { color: "#4c217dff" }]}>Scan a Product or Ingredient</Text>
           </Pressable>
         </View>
 
