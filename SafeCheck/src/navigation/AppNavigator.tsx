@@ -7,6 +7,7 @@ import ResultScreen from "../screens/ResultScreen";
 import SignupScreen from "../screens/SignupScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ManualScreen from "../screens/ManualScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 
 
@@ -22,6 +23,7 @@ export default function AppNavigator() {
       <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Your Profile" }} />
       <Stack.Screen name="Result" component={ResultScreen} options={{ title: "Safety Results" }} />
       <Stack.Screen name="Manual" component={ManualScreen} options={{ title: "Type" }} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: "Settings" }} />
     </Stack.Navigator>
   );
 }

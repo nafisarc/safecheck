@@ -1,80 +1,22 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, Pressable, ScrollView, Linking } from "react-native";
-
-function prettyTag(tag: string) {
-  return tag
-    .replace(/_/g, " ")
-    .split(" ")
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
-}
-
-function humanJoin(list: string[]) {
-  if (list.length <= 1) return list[0] || "";
-  if (list.length === 2) return `${list[0]} and ${list[1]}`;
-  return `${list.slice(0, -1).join(", ")}, and ${list[list.length - 1]}`;
-}
-
-function cleanSentence(s: string) {
-  return s
-    .replace(/_/g, " ")
-    .replace(/\//g, ", ")
-    .replace(/;/g, ".")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function buildWhyLines(risk: string, tags: string[], profileFlags: string[]) {
-  // for nice personalised wording
-  const relevantFlags = ["sensitive", "rosacea", "eczema", "psoriasis", "dry"].filter((f) =>
-    profileFlags.includes(f)
-  );
-
-  // UNKNOWN
-  if (risk === "unknown") {
-    return [
-      "This ingredient isn’t in SafeCheck’s current demo database yet.",
-      "Double-check spelling or try the label’s exact INCI name (e.g., Aqua/Water).",
-    ];
-  }
-
-  const lines: string[] = [];
-
-  // HIGH / CAUTION reasons based on tags (soft wording)
-  if (tags.includes("sensitizer_flag")) {
-    lines.push("A potential sensitizer, so SafeCheck treats it more strictly.");
-  }
-
-  if (tags.includes("aha") || tags.includes("bha") || tags.includes("exfoliant") || tags.includes("active")) {
-    lines.push("This is an exfoliating active. Some people experience dryness or stinging, especially with sensitive skin.");
-  }
-
-  if (tags.includes("surfactant")) {
-    lines.push("This is a cleansing agent. Very dry or sensitive skin may prefer gentler formulas.");
-  }
-
-  if (tags.includes("potential_sting") || tags.includes("strong_ph_adjuster") || tags.includes("ph_adjuster")) {
-    lines.push("This ingredient can contribute to stinging in some formulas on very sensitive or compromised skin.");
-  }
-
-  // Personalization line (only if flags exist)
-  if (relevantFlags.length) {
-    lines.push(`Because your profile includes ${humanJoin(relevantFlags.map(prettyTag))}, SafeCheck suggests extra caution here.`);
-  }
-
-  // fallback if no lines were added
-  if (!lines.length) {
-    lines.push("Flagged based on SafeCheck’s rules and your selected profile settings.");
-  }
-
-  return lines;
-}
+import { View, Text, Pressable, ScrollView, Linking, Alert } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 
 type Risk = "low" | "caution" | "high" | "unknown";
+type Grad = readonly [string, string];
 
-function riskRank(r: Risk) {
-  return r === "low" ? 0 : r === "caution" ? 1 : r === "high" ? 2 : -1;
-}
+const COLORS = {
+  primary: "#8d67b9ff",
+  deep: "#4c217dff",
+  bg: "#FFFFFF",
+  outline: "#EEE6FA",
+  text: "#221B2D",
+  black: "#111111",
+  muted: "#6D647A",
+  chipBg: "#F6F6F8",
+  chipBorder: "#E8E8EE",
+};
 
 function normalizeRisk(r: any): Risk {
   const v = String(r || "").toLowerCase();
@@ -82,6 +24,10 @@ function normalizeRisk(r: any): Risk {
   if (v === "caution" || v === "medium") return "caution";
   if (v === "high") return "high";
   return "unknown";
+}
+
+function riskRank(r: Risk) {
+  return r === "low" ? 0 : r === "caution" ? 1 : r === "high" ? 2 : -1;
 }
 
 function computeOverall(results: any[]): Risk {
@@ -93,10 +39,125 @@ function computeOverall(results: any[]): Risk {
   return best;
 }
 
+function prettyTag(tag: string) {
+  return tag
+    .replace(/_/g, " ")
+    .split(" ")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function humanJoin(list: string[]) {
+  if (list.length <= 1) return list[0] || "";
+  if (list.length === 2) return `${list[0]} and ${list[1]}`;
+  return `${list.slice(0, -1).join(", ")}, and ${list[list.length - 1]}`;
+}
+
+function getRiskMeta(risk: Risk) {
+  if (risk === "high") {
+    return {
+      label: "High Risk",
+      pill: "HIGH",
+      icon: "warning-outline" as const,
+      grad: ["#FDECEC", "#FFF6F6"] as Grad,
+      border: "#F2B6B6",
+      text: "#B00020",
+    };
+  }
+  if (risk === "caution") {
+    return {
+      label: "Medium Risk",
+      pill: "MEDIUM",
+      icon: "alert-circle-outline" as const,
+      grad: ["#FFF4E5", "#FFF9F1"] as Grad,
+      border: "#FFD6A3",
+      text: "#7A4B00",
+    };
+  }
+  if (risk === "low") {
+    return {
+      label: "Low Risk",
+      pill: "LOW",
+      icon: "shield-checkmark-outline" as const,
+      grad: ["#EAF7EE", "#F4FBF6"] as Grad,
+      border: "#B9E0BB",
+      text: "#1B5E20",
+    };
+  }
+  return {
+    label: "Unknown",
+    pill: "UNKNOWN",
+    icon: "help-circle-outline" as const,
+    grad: ["#F3F3F3", "#FAFAFA"] as Grad,
+    border: "#E0E0E0",
+    text: "#333",
+  };
+}
+
+function buildShortReason(tags: string[], risk: Risk) {
+  if (risk === "unknown") return "This ingredient isn’t in the current SafeCheck demo database yet.";
+  if (tags.includes("sensitizer_flag")) return "Potential sensitizer — may trigger irritation or allergy in some users.";
+  if (tags.includes("aha") || tags.includes("bha") || tags.includes("exfoliant") || tags.includes("active")) {
+    return "Exfoliating active — can cause dryness or stinging depending on your skin and product strength.";
+  }
+  if (tags.includes("surfactant")) return "Cleansing agent — some formulas may feel drying on sensitive or dry skin.";
+  if (tags.includes("potential_sting") || tags.includes("strong_ph_adjuster") || tags.includes("ph_adjuster")) {
+    return "May contribute to stinging on very sensitive or compromised skin (depends on the formula).";
+  }
+  if (risk === "caution") return "Flagged as medium risk by SafeCheck’s demo rules.";
+  if (risk === "high") return "Flagged as high risk by SafeCheck’s demo rules.";
+  return "Generally low concern in this demo knowledge base.";
+}
+
+function buildWatchOutFor(flagged: any[], profileFlags: string[], overallRisk: Risk) {
+  const lines: string[] = [];
+
+  const tagsAll = flagged.flatMap((x) => (Array.isArray(x.tags) ? x.tags : []));
+  const hasExfoliant = tagsAll.some((t) => ["aha", "bha", "exfoliant", "active"].includes(t));
+  const hasSensitizer = tagsAll.includes("sensitizer_flag");
+  const hasSurfactant = tagsAll.includes("surfactant");
+  const hasSting = tagsAll.some((t) => ["potential_sting", "strong_ph_adjuster", "ph_adjuster"].includes(t));
+
+  const relevantFlags = ["sensitive", "rosacea", "eczema", "psoriasis", "dry"].filter((f) =>
+    profileFlags.includes(f)
+  );
+
+  if (overallRisk === "high") {
+    lines.push("Patch test first (inner arm) and wait 24 hours before full use.");
+  } else if (overallRisk === "caution") {
+    lines.push("Patch testing is recommended, especially if you’ve reacted to products before.");
+  } else {
+    lines.push("Start slowly with new products and monitor for redness or itching.");
+  }
+
+  if (relevantFlags.length) {
+    lines.push(`Because your profile includes ${humanJoin(relevantFlags.map(prettyTag))}, SafeCheck applies stricter checks.`);
+  }
+
+  if (hasExfoliant) {
+    lines.push("Exfoliating actives can irritate — avoid overuse at first and don’t apply on broken skin.");
+  }
+  if (hasSensitizer) {
+    lines.push("If you notice itching, swelling, or burning, stop use and rinse off.");
+  }
+  if (hasSurfactant && (profileFlags.includes("dry") || profileFlags.includes("sensitive") || profileFlags.includes("eczema"))) {
+    lines.push("If cleansing feels tight/dry, switch to a gentler cleanser and moisturize right after.");
+  }
+  if (hasSting) {
+    lines.push("If stinging happens, keep usage minimal and avoid layering with strong actives.");
+  }
+
+  return lines.slice(0, 5);
+}
+
 export default function ResultScreen({ navigation, route }: any) {
   const payload = route?.params?.payload || {};
   const results: any[] = payload.results || [];
+
+  const mode: "ingredients" | "product" = route?.params?.mode || "ingredients";
+  const productTitle: string | undefined = route?.params?.productTitle;
   const inputIngredients: string[] = route?.params?.inputIngredients || [];
+  const profileFlags: string[] = route?.params?.profileFlags || [];
 
   const overallRisk: Risk = useMemo(() => {
     const fromApi = payload.overall_risk || payload.overallRisk;
@@ -112,242 +173,307 @@ export default function ResultScreen({ navigation, route }: any) {
       const status = r.status || "";
       const risk = normalizeRisk(r.final_risk ?? r.personalized ?? r.base_risk ?? r.risk);
 
-      if (status === "unknown" || risk === "unknown") {
-        unknown.push(r);
-      } else if (risk === "low") {
-        safe.push(r);
-      } else {
-        flagged.push(r);
-      }
+      if (status === "unknown" || risk === "unknown") unknown.push(r);
+      else if (risk === "low") safe.push(r);
+      else flagged.push(r);
     }
 
     return { safe, flagged, unknown };
   }, [results]);
 
-  const header = useMemo(() => {
-    if (overallRisk === "high") return { label: "High Risk", bg: "#FDECEC", border: "#F2B6B6", text: "#B00020" };
-    if (overallRisk === "caution") return { label: "Caution", bg: "#FFF4E5", border: "#FFD6A3", text: "#7A4B00" };
-    if (overallRisk === "low") return { label: "Low Risk", bg: "#EAF7EE", border: "#B9E0BB", text: "#1B5E20" };
-    return { label: "Unknown", bg: "#F3F3F3", border: "#E0E0E0", text: "#333" };
-  }, [overallRisk]);
+  const headerMeta = useMemo(() => getRiskMeta(overallRisk), [overallRisk]);
+  const watchOutLines = useMemo(
+    () => buildWatchOutFor(grouped.flagged, profileFlags, overallRisk),
+    [grouped.flagged, profileFlags, overallRisk]
+  );
+
+  const riskyCount = grouped.flagged.length;
+
+  const riskyLine = useMemo(() => {
+    if (riskyCount === 0) return "We didn’t find any ingredients that need extra caution.";
+    if (riskyCount === 1) return "We found 1 ingredient that may need extra caution.";
+    return `We found ${riskyCount} ingredients that may need extra caution.`;
+  }, [riskyCount]);
 
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
-
   const toggle = (key: string) => setExpanded((p) => ({ ...p, [key]: !p[key] }));
 
   const IngredientCard = ({ item }: { item: any }) => {
-  const inci = item.inci || item.name || item.input;
+    const inci = item.inci || item.name || item.input;
+    const risk = normalizeRisk(item.final_risk ?? item.personalized ?? item.base_risk ?? item.risk);
+    const meta = getRiskMeta(risk);
 
-  const risk = normalizeRisk(item.final_risk ?? item.personalized ?? item.base_risk ?? item.risk);
-  const tags: string[] = Array.isArray(item.tags) ? item.tags : [];
-  const sources: any[] = item.cir_sources || [];
+    const tags: string[] = Array.isArray(item.tags) ? item.tags : [];
+    const sources: any[] = item.cir_sources || [];
+    const isOpen = !!expanded[inci];
 
-  const profileFlags: string[] = route?.params?.profileFlags || []; // ✅
+    const shortReason = buildShortReason(tags, risk);
 
-  // Nice “details” text generated from tags (not raw KB sentences)
-  const whyLines = buildWhyLines(risk, tags, profileFlags);
+    const details: string[] = [
+      shortReason,
+      profileFlags.length
+        ? `Based on your profile: ${humanJoin(profileFlags.map(prettyTag))}.`
+        : "No profile selected — showing general demo guidance.",
+      tags.length ? `Key attributes: ${tags.slice(0, 4).map(prettyTag).join(", ")}.` : "",
+    ].filter(Boolean);
 
-  // Optional: if you still want to include KB notes, clean them first
-  const cleanedNotes: string[] = Array.isArray(item.risk_notes)
-    ? item.risk_notes.map(cleanSentence)
-    : [];
+    const detailsTitle =
+      risk === "unknown" ? "Why is this unknown?" : "Why is this flagged?";
 
-  // Combine (avoid ugly raw backend strings by NOT using item.reasons)
-  const details = [...whyLines, ...cleanedNotes].slice(0, 5);
+    const showSave = risk === "high" || risk === "caution";
 
-  const riskChip =
-    risk === "high"
-      ? { bg: "#FDECEC", border: "#F2B6B6", text: "#B00020", label: "HIGH" }
-      : risk === "caution"
-      ? { bg: "#FFF4E5", border: "#FFD6A3", text: "#7A4B00", label: "CAUTION" }
-      : risk === "low"
-      ? { bg: "#EAF7EE", border: "#B9E0BB", text: "#1B5E20", label: "LOW" }
-      : { bg: "#F3F3F3", border: "#E0E0E0", text: "#333", label: "UNKNOWN" };
-
-  const key = String(inci);
-  const isOpen = !!expanded[key];
-
-  const title =
-    risk === "unknown"
-      ? "Why is this unknown?"
-      : risk === "low"
-      ? "Details"
-      : "Why is this flagged?";
-
-  return (
-    <View
-      style={{
-        borderWidth: 1,
-        borderColor: "#EEE6FA",
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 12,
-        backgroundColor: "white",
-      }}
-    >
-      {/* Top row */}
-      <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }}>
-        <View style={{ flex: 1 }}>
-          <Text style={{ color: "#4c217dff", fontWeight: "900", fontSize: 18 }}>{inci}</Text>
-
-          {/* Tags as chips (no ugly underscores) */}
-          {tags.length ? (
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
-              {tags.slice(0, 4).map((t) => (
-                <View
-                  key={t}
-                  style={{
-                    paddingVertical: 6,
-                    paddingHorizontal: 10,
-                    borderRadius: 999,
-                    backgroundColor: "#FBFAFF",
-                    borderWidth: 1,
-                    borderColor: "#D9C9F2",
-                  }}
-                >
-                  <Text style={{ color: "#4c217dff", fontWeight: "800", fontSize: 12 }}>
-                    {prettyTag(t)}
-                  </Text>
-                </View>
-              ))}
-              {tags.length > 4 ? (
-                <View
-                  style={{
-                    paddingVertical: 6,
-                    paddingHorizontal: 10,
-                    borderRadius: 999,
-                    backgroundColor: "#FBFAFF",
-                    borderWidth: 1,
-                    borderColor: "#D9C9F2",
-                  }}
-                >
-                  <Text style={{ color: "#4c217dff", fontWeight: "800", fontSize: 12 }}>
-                    +{tags.length - 4}
-                  </Text>
-                </View>
-              ) : null}
-            </View>
-          ) : null}
-        </View>
-
-        {/* Risk badge */}
-        <View
-          style={{
-            alignSelf: "flex-start",
-            paddingVertical: 6,
-            paddingHorizontal: 12,
-            borderRadius: 999,
-            backgroundColor: riskChip.bg,
-            borderWidth: 1,
-            borderColor: riskChip.border,
-          }}
-        >
-          <Text style={{ color: riskChip.text, fontWeight: "900", fontSize: 12 }}>{riskChip.label}</Text>
-        </View>
-      </View>
-
-      {/* Details toggle */}
-      <Pressable onPress={() => toggle(key)} style={{ marginTop: 12 }}>
-        <Text style={{ color: "#8d67b9ff", fontWeight: "900" }}>
-          {isOpen ? "Hide details" : title}
-        </Text>
-      </Pressable>
-
-      {/* Details */}
-      {isOpen ? (
-        <View style={{ marginTop: 10 }}>
-          {details.map((t, idx) => (
-            <Text key={idx} style={{ marginBottom: 8, opacity: 0.85, lineHeight: 18 }}>
-              • {t}
-            </Text>
-          ))}
-
-          {/* Source button */}
-          {sources.length ? (
-            <Pressable
-              onPress={() => Linking.openURL(sources[0].url)}
-              style={{
-                marginTop: 10,
-                paddingVertical: 12,
-                borderRadius: 12,
-                alignItems: "center",
-                borderWidth: 1,
-                borderColor: "#8d67b9ff",
-              }}
-            >
-              <Text style={{ color: "#8d67b9ff", fontWeight: "900" }}>Open CIR Source</Text>
-            </Pressable>
-          ) : null}
-        </View>
-      ) : null}
-    </View>
-  );
-};
-
-  return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 24, backgroundColor: "white" }}>
-      {/* Summary Header */}
-      <View
+    return (
+      <LinearGradient
+        colors={meta.grad}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
         style={{
-          backgroundColor: header.bg,
           borderWidth: 1,
-          borderColor: header.border,
+          borderColor: meta.border,
           borderRadius: 16,
           padding: 16,
-          marginBottom: 16,
+          marginBottom: 12,
         }}
       >
-        <Text style={{ color: header.text, fontWeight: "900", fontSize: 18 }}>{header.label}</Text>
-        <Text style={{ marginTop: 6, opacity: 0.85 }}>
-          Based on the ingredients you entered{inputIngredients.length ? ` (${inputIngredients.length})` : ""}.
+        <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 12 }}>
+          <View style={{ flex: 1 }}>
+            {/* ✅ ingredient name BLACK for flagged/unknown cards */}
+            <Text style={{ color: COLORS.black, fontWeight: "900", fontSize: 18 }}>{inci}</Text>
+
+            <Text style={{ marginTop: 6, color: COLORS.text, opacity: 0.85, lineHeight: 18 }}>
+              {shortReason}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              alignSelf: "flex-start",
+              paddingVertical: 6,
+              paddingHorizontal: 12,
+              borderRadius: 999,
+              backgroundColor: "rgba(255,255,255,0.8)",
+              borderWidth: 1,
+              borderColor: meta.border,
+            }}
+          >
+            <Text style={{ color: meta.text, fontWeight: "900", fontSize: 12 }}>
+              {meta.pill}
+            </Text>
+          </View>
+        </View>
+
+        {/* ✅ Save line smaller + less prominent */}
+        {showSave ? (
+          <Pressable
+            onPress={() => Alert.alert("Coming soon", "Saving to Avoid List will be added next.")}
+            style={{ marginTop: 12, flexDirection: "row", alignItems: "center", gap: 8 }}
+          >
+            <Ionicons name="bookmark-outline" size={15} color={COLORS.primary} />
+            <Text style={{ color: COLORS.primary, fontWeight: "800", fontSize: 13 }}>
+              Save to My Avoid List
+            </Text>
+          </Pressable>
+        ) : null}
+
+        {/* ✅ Why line bigger (more prominent) */}
+        <Pressable onPress={() => toggle(inci)} style={{ marginTop: 10 }}>
+          <Text style={{ color: COLORS.primary, fontWeight: "900", fontSize: 15 }}>
+            {isOpen ? "Hide details" : detailsTitle}
+          </Text>
+        </Pressable>
+
+        {isOpen ? (
+          <View style={{ marginTop: 10 }}>
+            {details.slice(0, 4).map((t, idx) => (
+              <Text key={idx} style={{ marginBottom: 8, opacity: 0.9, lineHeight: 18 }}>
+                • {t}
+              </Text>
+            ))}
+
+            {sources.length ? (
+              <Pressable
+                onPress={() => Linking.openURL(sources[0].url)}
+                style={{
+                  marginTop: 10,
+                  paddingVertical: 12,
+                  borderRadius: 12,
+                  alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: COLORS.primary,
+                  backgroundColor: "rgba(255,255,255,0.65)",
+                }}
+              >
+                <Text style={{ color: COLORS.primary, fontWeight: "900" }}>Open CIR Source</Text>
+              </Pressable>
+            ) : null}
+          </View>
+        ) : null}
+      </LinearGradient>
+    );
+  };
+
+  return (
+    <ScrollView contentContainerStyle={{ padding: 24, paddingBottom: 160, backgroundColor: COLORS.bg }}>
+      <Text style={{ color: COLORS.deep, fontSize: 22, fontWeight: "900" }}>Safety Results</Text>
+      <Text style={{ marginTop: 4, opacity: 0.7 }}>Personalized for your profile</Text>
+
+      {/* Summary banner */}
+      <LinearGradient
+        colors={headerMeta.grad}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{
+          marginTop: 14,
+          borderWidth: 1,
+          borderColor: headerMeta.border,
+          borderRadius: 16,
+          padding: 16,
+        }}
+      >
+        <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+          <View
+            style={{
+              width: 42,
+              height: 42,
+              borderRadius: 999,
+              backgroundColor: "rgba(255,255,255,0.75)",
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 1,
+              borderColor: headerMeta.border,
+            }}
+          >
+            <Ionicons name={headerMeta.icon} size={22} color={headerMeta.text} />
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: headerMeta.text, fontWeight: "900", fontSize: 18 }}>
+              {headerMeta.label}
+            </Text>
+
+            {/* ✅ replace counts with nice sentence */}
+            <Text style={{ marginTop: 8, opacity: 0.9, lineHeight: 18 }}>
+              {mode === "product"
+                ? "Based on the product formula in the database."
+                : `Based on the ingredients you entered:`}
+            </Text>
+
+            <Text style={{ marginTop: 8, opacity: 0.95, fontWeight: "800", lineHeight: 18 }}>
+              {riskyLine}
+            </Text>
+
+            {productTitle ? (
+              <Text style={{ marginTop: 6, opacity: 0.8, fontWeight: "700" }}>
+                Product: {productTitle}
+              </Text>
+            ) : null}
+          </View>
+        </View>
+      </LinearGradient>
+
+      {/* What to watch out for (for you) */}
+      <LinearGradient
+        colors={["#EAF7EE", "#F4FBF6"] as Grad}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{
+          marginTop: 14,
+          borderWidth: 1,
+          borderColor: "#B9E0BB",
+          borderRadius: 16,
+          padding: 16,
+        }}
+      >
+        <Text style={{ color: "#1B5E20", fontWeight: "900", fontSize: 16 }}>
+          What to watch out for (for you)
         </Text>
 
-        <View style={{ flexDirection: "row", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-          <Text style={{ opacity: 0.8 }}>Flagged: <Text style={{ fontWeight: "900" }}>{grouped.flagged.length}</Text></Text>
-          <Text style={{ opacity: 0.8 }}>Safe: <Text style={{ fontWeight: "900" }}>{grouped.safe.length}</Text></Text>
-          <Text style={{ opacity: 0.8 }}>Unknown: <Text style={{ fontWeight: "900" }}>{grouped.unknown.length}</Text></Text>
+        <View style={{ marginTop: 10 }}>
+          {watchOutLines.map((line, idx) => (
+            <Text key={idx} style={{ marginBottom: 8, opacity: 0.9, lineHeight: 18 }}>
+              • {line}
+            </Text>
+          ))}
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Flagged */}
+      <Text style={{ marginTop: 18, color: COLORS.deep, fontSize: 18, fontWeight: "900" }}>
+        Flagged Ingredients
+      </Text>
+
       {grouped.flagged.length ? (
-        <>
-          <Text style={{ color: "#4c217dff", fontSize: 18, fontWeight: "900", marginBottom: 10 }}>
-            Flagged ingredients
-          </Text>
+        <View style={{ marginTop: 10 }}>
           {grouped.flagged.map((item, idx) => (
             <IngredientCard key={(item.inci || item.input || idx) + "_f"} item={item} />
           ))}
-        </>
-      ) : (
-        <View style={{ marginBottom: 14 }}>
-          <Text style={{ color: "#4c217dff", fontSize: 18, fontWeight: "900" }}>No flagged ingredients 🎉</Text>
-          <Text style={{ marginTop: 6, opacity: 0.75 }}>
-            Your list doesn’t contain any ingredients marked as unsafe.
-          </Text>
         </View>
+      ) : (
+        <LinearGradient
+          colors={["#EAF7EE", "#F4FBF6"] as Grad}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            marginTop: 10,
+            borderWidth: 1,
+            borderColor: "#B9E0BB",
+            borderRadius: 16,
+            padding: 16,
+          }}
+        >
+          <Text style={{ color: "#1B5E20", fontWeight: "900" }}>No flagged ingredients 🎉</Text>
+          <Text style={{ marginTop: 6, opacity: 0.85 }}>
+            SafeCheck didn’t find caution/high ingredients in your list (based on the current demo database).
+          </Text>
+        </LinearGradient>
       )}
 
       {/* Unknown */}
       {grouped.unknown.length ? (
         <>
-          <Text style={{ color: "#4c217dff", fontSize: 18, fontWeight: "900", marginTop: 10, marginBottom: 10 }}>
-            Unknown 
+          <Text style={{ marginTop: 14, color: COLORS.deep, fontSize: 18, fontWeight: "900" }}>
+            Unknown Ingredients
           </Text>
-          {grouped.unknown.map((item, idx) => (
-            <IngredientCard key={(item.inci || item.input || idx) + "_u"} item={item} />
-          ))}
+
+          {mode === "product" ? (
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10, marginTop: 10 }}>
+              {grouped.unknown.map((item, idx) => (
+                <View
+                  key={(item.inci || item.input || idx) + "_u_chip"}
+                  style={{
+                    paddingVertical: 8,
+                    paddingHorizontal: 12,
+                    borderRadius: 999,
+                    backgroundColor: COLORS.chipBg,
+                    borderWidth: 1,
+                    borderColor: COLORS.chipBorder,
+                  }}
+                >
+                  {/* ✅ unknown chip text BLACK */}
+                  <Text style={{ color: COLORS.black, fontWeight: "800" }}>
+                    {item.inci || item.input}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={{ marginTop: 10 }}>
+              {grouped.unknown.map((item, idx) => (
+                <IngredientCard key={(item.inci || item.input || idx) + "_u"} item={item} />
+              ))}
+            </View>
+          )}
         </>
       ) : null}
 
-      {/* Safe */}
+      {/* Safe ingredients */}
       {grouped.safe.length ? (
         <>
-          <Text style={{ color: "#4c217dff", fontSize: 18, fontWeight: "900", marginTop: 10, marginBottom: 10 }}>
-            Safe ingredients
+          <Text style={{ marginTop: 14, color: COLORS.deep, fontSize: 18, fontWeight: "900" }}>
+            Safe Ingredients
           </Text>
 
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10, marginTop: 10 }}>
             {grouped.safe.map((item, idx) => (
               <View
                 key={(item.inci || item.input || idx) + "_s"}
@@ -360,6 +486,7 @@ export default function ResultScreen({ navigation, route }: any) {
                   borderColor: "#B9E0BB",
                 }}
               >
+                {/* ✅ safe stays green */}
                 <Text style={{ color: "#1B5E20", fontWeight: "800" }}>
                   {item.inci || item.input}
                 </Text>
@@ -369,37 +496,53 @@ export default function ResultScreen({ navigation, route }: any) {
         </>
       ) : null}
 
+      {/* Disclaimer */}
+      <View
+        style={{
+          marginTop: 14,
+          borderWidth: 1,
+          borderColor: COLORS.outline,
+          borderRadius: 14,
+          padding: 14,
+          backgroundColor: "#FAFAFF",
+        }}
+      >
+        <Text style={{ fontSize: 12, opacity: 0.75, lineHeight: 16 }}>
+          Disclaimer: SafeCheck provides general information only and does not replace professional medical advice.
+          If you have persistent symptoms or severe reactions, consult a healthcare professional.
+        </Text>
+      </View>
+
       {/* Actions */}
       <View style={{ marginTop: 16 }}>
         <Pressable
-          onPress={() => navigation.replace("Manual")}
+          onPress={() => Alert.alert("Coming soon", "Ask Questions chat will be added next.")}
           style={{
-            backgroundColor: "#8d67b9ff",
+            borderWidth: 1,
+            borderColor: COLORS.primary,
             paddingVertical: 14,
             borderRadius: 12,
             alignItems: "center",
+            backgroundColor: "white",
             marginBottom: 10,
           }}
         >
-          <Text style={{ color: "white", fontWeight: "900" }}>Check another list</Text>
+          <Text style={{ color: COLORS.primary, fontWeight: "900" }}>Ask Questions</Text>
         </Pressable>
 
         <Pressable
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => navigation.replace("Manual")}
           style={{
-            borderWidth: 1,
-            borderColor: "#8d67b9ff",
+            backgroundColor: COLORS.primary,
             paddingVertical: 14,
             borderRadius: 12,
             alignItems: "center",
           }}
         >
-          <Text style={{ color: "#8d67b9ff", fontWeight: "900" }}>Update my profile</Text>
+          <Text style={{ color: "white", fontWeight: "900" }}>
+            {mode === "product" ? "Check Another Product" : "Check Another List"}
+          </Text>
         </Pressable>
-
-        <Text style={{ marginTop: 14, textAlign: "center", fontSize: 12, opacity: 0.65 }}>
-          SafeCheck is decision support only and does not provide medical advice.
-        </Text>
       </View>
     </ScrollView>
   );

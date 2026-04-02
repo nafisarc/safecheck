@@ -82,7 +82,7 @@ export default function ProfileScreen({ navigation }: any) {
           textAlign: "center",
         }}
       >
-        Tailor just for you!
+        Your Profile
       </Text>
 
       {/* Basic Info */}

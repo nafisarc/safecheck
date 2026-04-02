@@ -15,7 +15,7 @@ export default function BottomNavBar({ navigation, activeTab }: any) {
         navigation.navigate("Profile");
         break;
       case "settings":
-        Alert.alert("Coming soon", "Settings will be added later.");
+        navigation.navigate("Settings");
         break;
     }
   };
