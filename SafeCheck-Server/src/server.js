@@ -450,3 +450,68 @@ app.post("/api/check", async (req, res) => {
     res.status(500).send({ error: e.message });
   }
 });
+
+// ------------------------------
+// AI EXPLAINER
+// ------------------------------
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+app.post("/api/explain", authMiddleware, async (req, res) => {
+  try {
+    const { question, ingredients, profileFlags, previousMessages } = req.body;
+
+    if (!question) {
+      return res.status(400).send({ error: "Question is required." });
+    }
+
+    // Build context about the scan results
+    const ingredientSummary = (ingredients || [])
+      .map((i) => {
+        const risk = i.final_risk || i.risk || "unknown";
+        const tags = Array.isArray(i.tags) ? i.tags.join(", ") : "none";
+        return `- ${i.inci || i.input}: risk=${risk}, tags=${tags}`;
+      })
+      .join("\n");
+
+    const profileSummary =
+      profileFlags && profileFlags.length > 0
+        ? `User profile flags: ${profileFlags.join(", ")}`
+        : "No specific profile flags set.";
+
+    const systemPrompt = `You are SafeCheck's AI assistant. You help users understand cosmetic ingredient safety in simple, friendly language.
+
+You have access to the following scan results for this user's product:
+${ingredientSummary}
+
+${profileSummary}
+
+Rules:
+- Keep answers short, clear, and friendly (2-4 sentences max unless user asks for more detail)
+- Never give medical diagnoses or replace professional advice
+- Always remind users to patch test if they seem worried
+- If asked about an ingredient not in the scan, give general cosmetic safety info
+- Don't use overly technical language unless the user asks for it
+- End responses with a helpful tip or follow-up suggestion when relevant`;
+
+    // Build conversation history for multi-turn chat
+    const history = (previousMessages || []).map((m) => ({
+      role: m.role === "user" ? "user" : "model",
+      parts: [{ text: m.text }],
+    }));
+
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      systemInstruction: systemPrompt,
+    });
+
+    const chat = model.startChat({ history });
+    const result = await chat.sendMessage(question);
+    const reply = result.response.text();
+
+    res.send({ reply });
+  } catch (e) {
+    console.error("Gemini error:", e?.message);
+    res.status(500).send({ error: e.message || "Could not generate explanation." });
+  }
+});

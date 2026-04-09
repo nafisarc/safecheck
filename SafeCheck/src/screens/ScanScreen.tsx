@@ -1,11 +1,10 @@
 import React, { useState, useRef } from "react";
-import {
-  View, Text, Pressable, ActivityIndicator, Alert, ScrollView
-} from "react-native";
+import { View, Text, Pressable, ActivityIndicator, Alert } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import api from "../services/api";
 import ScreenBackground from "../components/ScreenBackground";
 
+console.log("Key loaded:", process.env.EXPO_PUBLIC_GOOGLE_VISION_KEY);
 const GOOGLE_VISION_KEY = process.env.EXPO_PUBLIC_GOOGLE_VISION_KEY;
 
 function splitIngredients(raw: string): string[] {
@@ -95,6 +94,10 @@ export default function ScanScreen({ navigation, route }: any) {
       const visionData = await visionRes.json();
       const rawText =
         visionData?.responses?.[0]?.fullTextAnnotation?.text || "";
+
+        // ADD THIS TEMPORARILY
+console.log("Vision full response:", JSON.stringify(visionData, null, 2));
+console.log("Raw text found:", rawText);
 
       if (!rawText.trim()) {
         Alert.alert(

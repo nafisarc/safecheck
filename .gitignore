@@ -1,21 +1,29 @@
-# Node dependencies
+# dependencies
 node_modules/
 
-# Expo / RN build caches
-.expo/
-.expo-shared/
+# build output
+dist/
+build/
+
+# environment files
+.env
+.env.local
+.env.*.local
+
+# logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# TypeScript/VSC caches
-dist/
+# editor files
 .vscode/
-.env
 
-# Expo / Android / iOS build output
-android/
-ios/
-web-build/
+# temp / cache
+coverage/
+.tmp/
+.temp/
