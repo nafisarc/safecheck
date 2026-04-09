@@ -62,35 +62,43 @@ export default function ManualScreen({ navigation, route }: any) {
   }, [productQuery, mode]);
 
   const onAnalyzeIngredients = async () => {
-    Keyboard.dismiss();
-    setErrorMsg("");
+  Keyboard.dismiss();
+  setErrorMsg("");
 
-    if (parsedList.length === 0) {
-      setErrorMsg("Please paste or type at least one ingredient.");
-      return;
-    }
+  if (parsedList.length === 0) {
+    setErrorMsg("Please paste or type at least one ingredient.");
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
+    console.log("1. Starting /api/check request");
+    console.log("2. Parsed list:", parsedList);
+    console.log("3. Profile flags:", profileFlags);
 
-      const res = await api.post("/api/check", {
-        ingredients: parsedList,
-        profileFlags,
-      });
+    const res = await api.post("/api/check", {
+      ingredients: parsedList,
+      profileFlags,
+    });
 
-      navigation.navigate("Result", {
-        payload: res.data,
-        inputIngredients: parsedList,
-        profileFlags,
-        mode: "ingredients",
-      });
-    } catch (e: any) {
-      const msg = e?.response?.data?.error || e?.message || "Something went wrong.";
-      setErrorMsg(msg);
-    } finally {
-      setLoading(false);
-    }
-  };
+    console.log("4. API responded:", res.data);
+
+    navigation.navigate("Result", {
+      payload: res.data,
+      inputIngredients: parsedList,
+      profileFlags,
+      mode: "ingredients",
+    });
+
+    console.log("5. Navigated to Result");
+  } catch (e: any) {
+    const msg = e?.response?.data?.error || e?.message || "Something went wrong.";
+    setErrorMsg(msg);
+  } finally {
+    console.log("6. Finished request");
+    setLoading(false);
+  }
+};
 
   const onSelectProduct = async (p: any) => {
   Keyboard.dismiss();

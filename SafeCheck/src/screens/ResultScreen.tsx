@@ -316,7 +316,7 @@ export default function ResultScreen({ navigation, route }: any) {
 
   return (
     <ScreenBackground>
-    <ScrollView contentContainerStyle={{ padding: 24, paddingBottom: 160, backgroundColor: COLORS.bg }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 24, paddingBottom: 160 }}>
       <Text style={{ color: COLORS.deep, fontSize: 22, fontWeight: "900" }}>Safety Results</Text>
       <Text style={{ marginTop: 4, opacity: 0.7 }}>Personalized for your profile</Text>
 

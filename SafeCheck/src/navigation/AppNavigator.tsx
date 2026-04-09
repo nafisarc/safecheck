@@ -8,8 +8,7 @@ import SignupScreen from "../screens/SignupScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ManualScreen from "../screens/ManualScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-
-
+import ScanScreen from "../screens/ScanScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +23,7 @@ export default function AppNavigator() {
       <Stack.Screen name="Result" component={ResultScreen} options={{ title: "Safety Results" }} />
       <Stack.Screen name="Manual" component={ManualScreen} options={{ title: "Type" }} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: "Settings" }} />
+      <Stack.Screen name="Scan" component={ScanScreen} options={{ title: "Scan" }} />
     </Stack.Navigator>
   );
 }

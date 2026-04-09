@@ -1,13 +1,15 @@
 import { View, Text, Pressable, Image, ScrollView } from "react-native";
+import ScreenBackground from "../components/ScreenBackground";
+
 
 export default function HomeScreen({ navigation }: any) {
   return (
+    <ScreenBackground>
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
         padding: 24,
         justifyContent: "center",
-        backgroundColor: "white",
       }}
     >
       {/* Logo and heading */}
@@ -87,5 +89,6 @@ export default function HomeScreen({ navigation }: any) {
         Try SafeCheck now — personalized cosmetic safety at your fingertips.
       </Text>
     </ScrollView>
+    </ScreenBackground>
   );
 }

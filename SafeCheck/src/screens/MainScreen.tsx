@@ -32,8 +32,7 @@ export default function CheckProductScreen({ navigation }: any) {
 
           <Pressable
             onPress={() => {
-              console.log("Camera placeholder");
-              // navigation.navigate("CameraScanner");
+              navigation.navigate("Scan");
             }}
             style={[
               styles.mainButton,

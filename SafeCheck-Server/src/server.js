@@ -445,7 +445,6 @@ app.post("/api/check", async (req, res) => {
       if (!rules.risk_rank[r.final_risk]) return acc;
       return riskMax(acc, r.final_risk);
     }, "low");
-
     res.send({ overall_risk: overallRisk, results });
   } catch (e) {
     res.status(500).send({ error: e.message });

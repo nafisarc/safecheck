@@ -4,6 +4,8 @@ import { View, Text, ScrollView, Pressable, Alert,} from "react-native";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import BottomNavBar from "../components/BottomNavBar";
 import api from "../services/api";
+import ScreenBackground from "../components/ScreenBackground";
+
 
 export default function SettingsScreen({ navigation }: any) {
 const handleSignOut = () => {
@@ -152,13 +154,13 @@ const handleDeleteAccount = () => {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <ScreenBackground>
+    <View style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
           padding: 24,
           paddingBottom: 110,
-          backgroundColor: "white",
         }}
       >
         <Text
@@ -257,5 +259,6 @@ const handleDeleteAccount = () => {
 
       <BottomNavBar navigation={navigation} activeTab="settings" />
     </View>
+    </ScreenBackground>
   );
 }
