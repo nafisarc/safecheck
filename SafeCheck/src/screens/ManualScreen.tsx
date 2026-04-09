@@ -72,16 +72,10 @@ export default function ManualScreen({ navigation, route }: any) {
 
   try {
     setLoading(true);
-    console.log("1. Starting /api/check request");
-    console.log("2. Parsed list:", parsedList);
-    console.log("3. Profile flags:", profileFlags);
-
     const res = await api.post("/api/check", {
       ingredients: parsedList,
       profileFlags,
     });
-
-    console.log("4. API responded:", res.data);
 
     navigation.navigate("Result", {
       payload: res.data,
@@ -90,12 +84,10 @@ export default function ManualScreen({ navigation, route }: any) {
       mode: "ingredients",
     });
 
-    console.log("5. Navigated to Result");
   } catch (e: any) {
     const msg = e?.response?.data?.error || e?.message || "Something went wrong.";
     setErrorMsg(msg);
   } finally {
-    console.log("6. Finished request");
     setLoading(false);
   }
 };

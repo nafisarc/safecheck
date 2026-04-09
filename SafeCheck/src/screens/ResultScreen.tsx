@@ -519,7 +519,13 @@ export default function ResultScreen({ navigation, route }: any) {
       {/* Actions */}
       <View style={{ marginTop: 16 }}>
         <Pressable
-          onPress={() => Alert.alert("Coming soon", "Ask Questions chat will be added next.")}
+          onPress={() =>
+            navigation.navigate("Explain", {
+              ingredients: results,
+              profileFlags,
+              productTitle,
+            })
+          }
           style={{
             borderWidth: 1,
             borderColor: COLORS.primary,

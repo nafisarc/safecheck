@@ -492,6 +492,7 @@ Rules:
 - Always remind users to patch test if they seem worried
 - If asked about an ingredient not in the scan, give general cosmetic safety info
 - Don't use overly technical language unless the user asks for it
+- Provide alternatives if asked
 - End responses with a helpful tip or follow-up suggestion when relevant`;
 
     // Build conversation history for multi-turn chat
@@ -501,7 +502,7 @@ Rules:
     }));
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       systemInstruction: systemPrompt,
     });
 
