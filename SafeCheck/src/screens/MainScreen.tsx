@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, Image, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import BottomNavBar from "../components/BottomNavBar"; 
+import ScreenBackground from "../components/ScreenBackground";
 
 export default function CheckProductScreen({ navigation }: any) {
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <ScreenBackground>
+    <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         {/*  Header with  logo */}
         <View style={styles.header}>
@@ -57,6 +59,7 @@ export default function CheckProductScreen({ navigation }: any) {
       </ScrollView>
       <BottomNavBar navigation={navigation} activeTab="home" />
     </View>
+    </ScreenBackground>
   );
 }
 

@@ -1,15 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  TextInput,
-  ActivityIndicator,
-  Keyboard,
-} from "react-native";
+import { View, Text, Pressable, ScrollView, TextInput, ActivityIndicator, Keyboard} from "react-native";
 import api from "../services/api";
 import BottomNavBar from "../components/BottomNavBar";
+import ScreenBackground from "../components/ScreenBackground";
+
 
 type Mode = "ingredients" | "product";
 
@@ -136,12 +130,12 @@ export default function ManualScreen({ navigation, route }: any) {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <ScreenBackground>
+    <View style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
           padding: 24,
-          backgroundColor: "white",
           paddingBottom: 200,
         }}
         keyboardShouldPersistTaps="handled"
@@ -382,5 +376,6 @@ export default function ManualScreen({ navigation, route }: any) {
 
       <BottomNavBar navigation={navigation} activeTab="manual" />
     </View>
+    </ScreenBackground>
   );
 }

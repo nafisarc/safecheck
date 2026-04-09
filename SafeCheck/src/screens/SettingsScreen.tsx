@@ -1,48 +1,54 @@
 import React from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Alert,
-} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, ScrollView, Pressable, Alert,} from "react-native";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import BottomNavBar from "../components/BottomNavBar";
+import api from "../services/api";
 
 export default function SettingsScreen({ navigation }: any) {
-  const handleSignOut = () => {
-    Alert.alert(
-      "Sign Out",
-      "Are you sure you want to sign out?",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Sign Out",
-          style: "destructive",
-          onPress: () => navigation.replace("Login"),
+const handleSignOut = () => {
+  Alert.alert(
+    "Sign Out",
+    "Are you sure you want to sign out?",
+    [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Sign Out",
+        style: "destructive",
+        onPress: async () => {
+          await AsyncStorage.removeItem("token");
+          await AsyncStorage.removeItem("user");
+          navigation.replace("Login");
         },
-      ]
-    );
-  };
+      },
+    ]
+  );
+};
 
-  const handleDeleteAccount = () => {
-    Alert.alert(
-      "Delete Account",
-      "This action is permanent. Your account and saved data will be deleted.",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: () => {
-            // later connect backend delete logic here
+const handleDeleteAccount = () => {
+  Alert.alert(
+    "Delete Account",
+    "This action is permanent. Your account and saved data will be deleted.",
+    [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await api.delete("/api/auth/delete-account");
+            await AsyncStorage.removeItem("token");
+            await AsyncStorage.removeItem("user");
             Alert.alert("Account Deleted", "Your account has been removed.");
             navigation.replace("Signup");
-          },
+          } catch (e: any) {
+            Alert.alert("Error", e.message || "Could not delete account.");
+          }
         },
-      ]
-    );
-  };
+      },
+    ]
+  );
+};
 
   const SettingRow = ({
     icon,

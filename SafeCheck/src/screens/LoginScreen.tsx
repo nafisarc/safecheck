@@ -1,26 +1,50 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, Image, ScrollView, TextInput } from "react-native";
+import { View, Text, Pressable, Image, ScrollView, TextInput, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../services/api";
+import ScreenBackground from "../components/ScreenBackground";
+
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const onLogin = () => {
-    // TODO: hook into my auth later
-    navigation.replace("Home");
+  const onLogin = async () => {
+    try {
+      if (!email.trim() || !password.trim()) {
+        Alert.alert("Missing fields", "Please enter your email and password.");
+        return;
+      }
+
+      setLoading(true);
+
+      const response = await api.post("/api/auth/login", {
+        email,
+        password,
+      });
+
+      await AsyncStorage.setItem("token", response.data.token);
+      await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
+
+      navigation.replace("Main");
+    } catch (e: any) {
+      Alert.alert("Login failed", e.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
+    <ScreenBackground>
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
         padding: 24,
         justifyContent: "center",
-        backgroundColor: "white",
       }}
       keyboardShouldPersistTaps="handled"
     >
-      {/* Header */}
       <View style={{ alignItems: "center", marginBottom: 18 }}>
         <View
           style={{
@@ -47,7 +71,6 @@ export default function LoginScreen({ navigation }: any) {
         </Text>
       </View>
 
-      {/* Card */}
       <View
         style={{
           backgroundColor: "#FFFFFF",
@@ -61,7 +84,6 @@ export default function LoginScreen({ navigation }: any) {
           elevation: 2,
         }}
       >
-        {/* Email */}
         <Text style={{ color: "#4c217dff", fontWeight: "700", marginBottom: 6 }}>Email</Text>
         <TextInput
           value={email}
@@ -81,7 +103,6 @@ export default function LoginScreen({ navigation }: any) {
           }}
         />
 
-        {/* Password */}
         <Text style={{ color: "#4c217dff", fontWeight: "700", marginBottom: 6 }}>Password</Text>
         <TextInput
           value={password}
@@ -99,35 +120,34 @@ export default function LoginScreen({ navigation }: any) {
           }}
         />
 
-        {/* Row: Forgot */}
         <View style={{ alignItems: "flex-end", marginTop: 10 }}>
-          <Pressable onPress={() => { /* later: navigation.navigate("ForgotPassword") */ }}>
+          <Pressable>
             <Text style={{ color: "#8d67b9ff", fontWeight: "700" }}>Forgot password?</Text>
           </Pressable>
         </View>
 
-        {/* Login button */}
         <Pressable
           onPress={onLogin}
+          disabled={loading}
           style={{
-            backgroundColor: "#8d67b9ff",
+            backgroundColor: loading ? "#CBB6E6" : "#8d67b9ff",
             paddingVertical: 14,
             borderRadius: 12,
             alignItems: "center",
             marginTop: 14,
           }}
         >
-          <Text style={{ color: "white", fontWeight: "800" }}>Login</Text>
+          <Text style={{ color: "white", fontWeight: "800" }}>
+            {loading ? "Logging in..." : "Login"}
+          </Text>
         </Pressable>
 
-        {/* Divider */}
         <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 14 }}>
           <View style={{ flex: 1, height: 1, backgroundColor: "#EEE6FA" }} />
           <Text style={{ marginHorizontal: 10, opacity: 0.6 }}>or</Text>
           <View style={{ flex: 1, height: 1, backgroundColor: "#EEE6FA" }} />
         </View>
 
-        {/* Create account button */}
         <Pressable
           onPress={() => navigation.navigate("Signup")}
           style={{
@@ -142,10 +162,10 @@ export default function LoginScreen({ navigation }: any) {
         </Pressable>
       </View>
 
-      {/* Footer */}
       <Text style={{ marginTop: 16, textAlign: "center", fontSize: 12, opacity: 0.65 }}>
         By continuing, you agree this app does not provide medical advice.
       </Text>
     </ScrollView>
+    </ScreenBackground>
   );
 }

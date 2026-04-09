@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, Image, ScrollView, TextInput } from "react-native";
+import { View, Text, Pressable, Image, ScrollView, TextInput, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../services/api";
+import ScreenBackground from "../components/ScreenBackground";
+
 
 export default function SignupScreen({ navigation }: any) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const passwordsMatch = password.length > 0 && password === confirmPassword;
-
-  const onSignup = () => {
-    // TODO: hook into real auth later
-
-    // If you want profile setup only for new users:
-    navigation.replace("Profile"); // or "ProfileSetup" if you make a separate setup screen
-  };
 
   const canSubmit =
     fullName.trim().length > 0 &&
@@ -23,17 +21,42 @@ export default function SignupScreen({ navigation }: any) {
     confirmPassword.length >= 6 &&
     passwordsMatch;
 
+  const onSignup = async () => {
+    try {
+      if (!canSubmit) {
+        Alert.alert("Invalid form", "Please complete all fields correctly.");
+        return;
+      }
+
+      setLoading(true);
+
+      const response = await api.post("/api/auth/signup", {
+        fullName,
+        email,
+        password,
+      });
+
+      await AsyncStorage.setItem("token", response.data.token);
+      await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
+
+      navigation.replace("Profile", { isNewUser: true });
+    } catch (e: any) {
+      Alert.alert("Signup failed", e.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
+    <ScreenBackground>
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
         padding: 24,
         justifyContent: "center",
-        backgroundColor: "white",
       }}
       keyboardShouldPersistTaps="handled"
     >
-      {/* Header */}
       <View style={{ alignItems: "center", marginBottom: 18 }}>
         <View
           style={{
@@ -60,7 +83,6 @@ export default function SignupScreen({ navigation }: any) {
         </Text>
       </View>
 
-      {/* Card */}
       <View
         style={{
           backgroundColor: "#FFFFFF",
@@ -74,7 +96,6 @@ export default function SignupScreen({ navigation }: any) {
           elevation: 2,
         }}
       >
-        {/* Full name */}
         <Text style={{ color: "#4c217dff", fontWeight: "700", marginBottom: 6 }}>Full name</Text>
         <TextInput
           value={fullName}
@@ -92,7 +113,6 @@ export default function SignupScreen({ navigation }: any) {
           }}
         />
 
-        {/* Email */}
         <Text style={{ color: "#4c217dff", fontWeight: "700", marginBottom: 6 }}>Email</Text>
         <TextInput
           value={email}
@@ -112,7 +132,6 @@ export default function SignupScreen({ navigation }: any) {
           }}
         />
 
-        {/* Password */}
         <Text style={{ color: "#4c217dff", fontWeight: "700", marginBottom: 6 }}>Password</Text>
         <TextInput
           value={password}
@@ -131,7 +150,6 @@ export default function SignupScreen({ navigation }: any) {
           }}
         />
 
-        {/* Confirm password */}
         <Text style={{ color: "#4c217dff", fontWeight: "700", marginBottom: 6 }}>Confirm password</Text>
         <TextInput
           value={confirmPassword}
@@ -141,7 +159,12 @@ export default function SignupScreen({ navigation }: any) {
           secureTextEntry
           style={{
             borderWidth: 1,
-            borderColor: confirmPassword.length === 0 ? "#D9C9F2" : passwordsMatch ? "#B9E0BB" : "#F2B6B6",
+            borderColor:
+              confirmPassword.length === 0
+                ? "#D9C9F2"
+                : passwordsMatch
+                ? "#B9E0BB"
+                : "#F2B6B6",
             borderRadius: 12,
             paddingHorizontal: 12,
             paddingVertical: 12,
@@ -149,29 +172,28 @@ export default function SignupScreen({ navigation }: any) {
           }}
         />
 
-        {/* Password hint */}
         {confirmPassword.length > 0 && !passwordsMatch ? (
           <Text style={{ marginTop: 8, color: "#B00020", fontWeight: "700" }}>
             Passwords don’t match
           </Text>
         ) : null}
 
-        {/* Signup button */}
         <Pressable
           onPress={onSignup}
-          disabled={!canSubmit}
+          disabled={!canSubmit || loading}
           style={{
-            backgroundColor: canSubmit ? "#8d67b9ff" : "#CBB6E6",
+            backgroundColor: canSubmit && !loading ? "#8d67b9ff" : "#CBB6E6",
             paddingVertical: 14,
             borderRadius: 12,
             alignItems: "center",
             marginTop: 14,
           }}
         >
-          <Text style={{ color: "white", fontWeight: "800" }}>Create account</Text>
+          <Text style={{ color: "white", fontWeight: "800" }}>
+            {loading ? "Creating account..." : "Create account"}
+          </Text>
         </Pressable>
 
-        {/* Already have account */}
         <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 14 }}>
           <Text style={{ opacity: 0.7 }}>Already have an account? </Text>
           <Pressable onPress={() => navigation.navigate("Login")}>
@@ -180,10 +202,10 @@ export default function SignupScreen({ navigation }: any) {
         </View>
       </View>
 
-      {/* Footer */}
       <Text style={{ marginTop: 16, textAlign: "center", fontSize: 12, opacity: 0.65 }}>
         SafeCheck is not a medical tool. Always consult a professional for medical advice.
       </Text>
     </ScrollView>
+    </ScreenBackground>
   );
 }

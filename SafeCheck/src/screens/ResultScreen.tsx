@@ -2,6 +2,8 @@ import React, { useMemo, useState } from "react";
 import { View, Text, Pressable, ScrollView, Linking, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import ScreenBackground from "../components/ScreenBackground";
+
 
 type Risk = "low" | "caution" | "high" | "unknown";
 type Grad = readonly [string, string];
@@ -313,6 +315,7 @@ export default function ResultScreen({ navigation, route }: any) {
   };
 
   return (
+    <ScreenBackground>
     <ScrollView contentContainerStyle={{ padding: 24, paddingBottom: 160, backgroundColor: COLORS.bg }}>
       <Text style={{ color: COLORS.deep, fontSize: 22, fontWeight: "900" }}>Safety Results</Text>
       <Text style={{ marginTop: 4, opacity: 0.7 }}>Personalized for your profile</Text>
@@ -545,5 +548,6 @@ export default function ResultScreen({ navigation, route }: any) {
         </Pressable>
       </View>
     </ScrollView>
+    </ScreenBackground>
   );
 }
