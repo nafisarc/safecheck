@@ -194,12 +194,7 @@ const handleDeleteAccount = () => {
           subtitle="View your account details"
           onPress={() => navigation.navigate("AccountInfo")}
         />
-        <SettingRow
-          icon="lock-closed-outline"
-          title="Change Password"
-          subtitle="Update your login password"
-          onPress={() => navigation.navigate("ChangePassword")}
-        />
+
 
         {/* Privacy & Legal */}
         <SectionTitle title="Privacy & Legal" />

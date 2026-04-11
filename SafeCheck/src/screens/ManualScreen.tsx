@@ -324,9 +324,9 @@ export default function ManualScreen({ navigation, route }: any) {
                   </Text>
                 ) : null}
 
-                {productResults.map((p) => (
+                {productResults.map((p, index) => (
                   <Pressable
-                    key={p.id}
+                    key={`${p.id}-${index}`}
                     onPress={() => onSelectProduct(p)}
                     disabled={loading}
                     style={{

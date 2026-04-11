@@ -17,9 +17,12 @@
       }
     ],
     "tags": [
+      "dry_skin_support",
+      "eczema_friendly",
+      "generally_well_tolerated",
       "humectant",
       "hydration_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -46,10 +49,13 @@
       }
     ],
     "tags": [
-      "humectant",
-      "soothing_support",
       "barrier_support",
-      "generally_well_tolerated"
+      "dry_skin_support",
+      "eczema_friendly",
+      "generally_well_tolerated",
+      "humectant",
+      "sensitive_skin_support",
+      "soothing_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -74,9 +80,11 @@
       }
     ],
     "tags": [
+      "dry_skin_support",
+      "generally_well_tolerated",
       "humectant",
       "hydration_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -99,9 +107,11 @@
       }
     ],
     "tags": [
+      "dry_skin_support",
+      "generally_well_tolerated",
       "humectant",
       "hydration_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -124,8 +134,11 @@
     ],
     "tags": [
       "barrier_support",
+      "dry_skin_support",
+      "eczema_friendly",
+      "generally_well_tolerated",
       "lipid_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -148,8 +161,11 @@
     ],
     "tags": [
       "barrier_support",
+      "dry_skin_support",
+      "eczema_friendly",
+      "generally_well_tolerated",
       "lipid_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -172,8 +188,11 @@
     ],
     "tags": [
       "barrier_support",
+      "dry_skin_support",
+      "eczema_friendly",
+      "generally_well_tolerated",
       "lipid_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -196,9 +215,11 @@
       }
     ],
     "tags": [
+      "dry_skin_support",
       "emollient",
+      "generally_well_tolerated",
       "occlusive_support",
-      "generally_well_tolerated"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -221,10 +242,12 @@
       }
     ],
     "tags": [
-      "fatty_alcohol",
+      "dry_skin_support",
       "emollient",
-      "texture_support",
-      "generally_well_tolerated"
+      "fatty_alcohol",
+      "generally_well_tolerated",
+      "sensitive_skin_support",
+      "texture_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -248,11 +271,13 @@
       }
     ],
     "tags": [
-      "fatty_alcohol",
+      "dry_skin_support",
       "emollient",
       "emulsifier",
-      "texture_support",
-      "generally_well_tolerated"
+      "fatty_alcohol",
+      "generally_well_tolerated",
+      "sensitive_skin_support",
+      "texture_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -275,8 +300,12 @@
       }
     ],
     "tags": [
-      "surfactant",
-      "cleanser_component"
+      "cleanser_component",
+      "drying",
+      "eczema_trigger",
+      "psoriasis_trigger",
+      "sensitive_skin_trigger",
+      "surfactant"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -299,8 +328,12 @@
       }
     ],
     "tags": [
-      "surfactant",
-      "cleanser_component"
+      "cleanser_component",
+      "drying",
+      "eczema_trigger",
+      "psoriasis_trigger",
+      "sensitive_skin_trigger",
+      "surfactant"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -323,8 +356,13 @@
       }
     ],
     "tags": [
-      "surfactant",
-      "cleanser_component"
+      "cleanser_component",
+      "drying",
+      "eczema_trigger",
+      "psoriasis_trigger",
+      "sensitive_skin_trigger",
+      "sulfate",
+      "surfactant"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -347,8 +385,12 @@
       }
     ],
     "tags": [
-      "surfactant",
-      "cleanser_component"
+      "cleanser_component",
+      "drying",
+      "eczema_trigger",
+      "psoriasis_trigger",
+      "sensitive_skin_trigger",
+      "surfactant"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -371,8 +413,11 @@
       }
     ],
     "tags": [
+      "eczema_trigger",
       "ph_adjuster",
-      "potential_sting"
+      "potential_sting",
+      "rosacea_trigger",
+      "sensitive_skin_trigger"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -397,9 +442,12 @@
       }
     ],
     "tags": [
+      "eczema_trigger",
       "ph_adjuster",
-      "strong_ph_adjuster",
-      "potential_sting"
+      "potential_sting",
+      "rosacea_trigger",
+      "sensitive_skin_trigger",
+      "strong_ph_adjuster"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -425,9 +473,14 @@
     ],
     "tags": [
       "active",
-      "exfoliant",
       "bha",
-      "potential_sting"
+      "drying",
+      "eczema_trigger",
+      "exfoliant",
+      "potential_sting",
+      "psoriasis_trigger",
+      "rosacea_trigger",
+      "sensitive_skin_trigger"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -451,9 +504,14 @@
     ],
     "tags": [
       "active",
-      "exfoliant",
       "aha",
-      "potential_sting"
+      "drying",
+      "eczema_trigger",
+      "exfoliant",
+      "potential_sting",
+      "psoriasis_trigger",
+      "rosacea_trigger",
+      "sensitive_skin_trigger"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -477,9 +535,14 @@
     ],
     "tags": [
       "active",
-      "exfoliant",
       "aha",
-      "potential_sting"
+      "drying",
+      "eczema_trigger",
+      "exfoliant",
+      "potential_sting",
+      "psoriasis_trigger",
+      "rosacea_trigger",
+      "sensitive_skin_trigger"
     ],
     "base_risk": "caution",
     "risk_notes": [
@@ -501,8 +564,9 @@
       }
     ],
     "tags": [
-      "preservative",
-      "paraben"
+      "paraben",
+      "preference_avoid_option",
+      "preservative"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -524,8 +588,9 @@
       }
     ],
     "tags": [
-      "preservative",
-      "paraben"
+      "paraben",
+      "preference_avoid_option",
+      "preservative"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -547,8 +612,9 @@
       }
     ],
     "tags": [
-      "preservative",
-      "paraben"
+      "paraben",
+      "preference_avoid_option",
+      "preservative"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -572,9 +638,13 @@
       }
     ],
     "tags": [
+      "eczema_trigger",
+      "high_attention",
       "preservative",
-      "sensitizer_flag",
-      "high_attention"
+      "psoriasis_trigger",
+      "rosacea_trigger",
+      "sensitive_skin_trigger",
+      "sensitizer_flag"
     ],
     "base_risk": "high",
     "risk_notes": [
@@ -621,6 +691,7 @@
       }
     ],
     "tags": [
+      "generally_well_tolerated",
       "mineral_salt",
       "skin_conditioning"
     ],
@@ -647,8 +718,10 @@
       }
     ],
     "tags": [
+      "dry_skin_support",
       "humectant",
-      "hydration_support"
+      "hydration_support",
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -671,8 +744,11 @@
       }
     ],
     "tags": [
+      "barrier_support",
+      "dry_skin_support",
+      "eczema_friendly",
       "lipid_support",
-      "barrier_support"
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -698,6 +774,7 @@
     ],
     "tags": [
       "antioxidant",
+      "generally_well_tolerated",
       "skin_conditioning"
     ],
     "base_risk": "low",
@@ -721,8 +798,9 @@
       }
     ],
     "tags": [
-      "thickener",
-      "stabilizer"
+      "generally_well_tolerated",
+      "stabilizer",
+      "thickener"
     ],
     "base_risk": "low",
     "risk_notes": [
@@ -745,8 +823,11 @@
       }
     ],
     "tags": [
+      "dry_skin_support",
+      "eczema_friendly",
       "emollient",
-      "lipid_support"
+      "lipid_support",
+      "sensitive_skin_support"
     ],
     "base_risk": "low",
     "risk_notes": [

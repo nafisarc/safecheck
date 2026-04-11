@@ -1,19 +1,20 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, Pressable, ActivityIndicator, Alert } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import api from "../services/api";
 import ScreenBackground from "../components/ScreenBackground";
 
-console.log("Key loaded:", process.env.EXPO_PUBLIC_GOOGLE_VISION_KEY);
 const GOOGLE_VISION_KEY = process.env.EXPO_PUBLIC_GOOGLE_VISION_KEY;
 
 function splitIngredients(raw: string): string[] {
   return raw
     .replace(/•/g, ",")
     .replace(/\n/g, ",")
+    .replace(/;/g, ",")
     .split(",")
     .map((x) => x.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((item, index, arr) => arr.indexOf(item) === index);
 }
 
 export default function ScanScreen({ navigation, route }: any) {
@@ -23,22 +24,43 @@ export default function ScanScreen({ navigation, route }: any) {
   const [statusMsg, setStatusMsg] = useState("");
   const cameraRef = useRef<CameraView>(null);
 
-  // Permission not yet determined
   if (!permission) {
-    return <View />;
+    return <View style={{ flex: 1 }} />;
   }
 
-  // Permission denied
   if (!permission.granted) {
     return (
       <ScreenBackground>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 24 }}>
-          <Text style={{ color: "#4c217dff", fontSize: 18, fontWeight: "800", marginBottom: 12 }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 24,
+          }}
+        >
+          <Text
+            style={{
+              color: "#4c217dff",
+              fontSize: 18,
+              fontWeight: "800",
+              marginBottom: 12,
+            }}
+          >
             Camera Access Needed
           </Text>
-          <Text style={{ textAlign: "center", opacity: 0.7, marginBottom: 20 }}>
+
+          <Text
+            style={{
+              textAlign: "center",
+              opacity: 0.7,
+              marginBottom: 20,
+              lineHeight: 22,
+            }}
+          >
             SafeCheck needs camera access to scan ingredient labels.
           </Text>
+
           <Pressable
             onPress={requestPermission}
             style={{
@@ -48,7 +70,9 @@ export default function ScanScreen({ navigation, route }: any) {
               borderRadius: 12,
             }}
           >
-            <Text style={{ color: "white", fontWeight: "800" }}>Grant Permission</Text>
+            <Text style={{ color: "white", fontWeight: "800" }}>
+              Grant Permission
+            </Text>
           </Pressable>
         </View>
       </ScreenBackground>
@@ -58,28 +82,37 @@ export default function ScanScreen({ navigation, route }: any) {
   const handleCapture = async () => {
     if (!cameraRef.current || loading) return;
 
+    if (!GOOGLE_VISION_KEY) {
+      Alert.alert(
+        "Configuration error",
+        "Google Vision API key is missing. Please check your environment settings."
+      );
+      return;
+    }
+
     try {
       setLoading(true);
       setStatusMsg("Capturing image...");
 
-      // 1. Take photo as base64
       const photo = await cameraRef.current.takePictureAsync({
         base64: true,
         quality: 0.8,
       });
 
       if (!photo?.base64) {
-        Alert.alert("Error", "Could not capture image. Please try again.");
+        Alert.alert("Capture failed", "Could not capture image. Please try again.");
         return;
       }
 
-      // 2. Send to Google Vision API
       setStatusMsg("Reading ingredients...");
+
       const visionRes = await fetch(
         `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_VISION_KEY}`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             requests: [
               {
@@ -91,50 +124,79 @@ export default function ScanScreen({ navigation, route }: any) {
         }
       );
 
-      const visionData = await visionRes.json();
-      const rawText =
-        visionData?.responses?.[0]?.fullTextAnnotation?.text || "";
+      if (!visionRes.ok) {
+        const errorText = await visionRes.text();
+        console.log("Vision API error:", visionRes.status, errorText);
 
-        // ADD THIS TEMPORARILY
-console.log("Vision full response:", JSON.stringify(visionData, null, 2));
-console.log("Raw text found:", rawText);
-
-      if (!rawText.trim()) {
         Alert.alert(
-          "No text found",
-          "SafeCheck couldn't read text from this image. Try better lighting or hold the camera closer."
+          "OCR failed",
+          "SafeCheck could not read the image right now. Please try again in a moment."
         );
         return;
       }
 
-      // 3. Parse into ingredients list
+      const visionData = await visionRes.json();
+
+      const apiError = visionData?.responses?.[0]?.error;
+      if (apiError) {
+        console.log("Vision API response error:", apiError);
+
+        Alert.alert(
+          "OCR failed",
+          apiError.message || "SafeCheck could not process the image."
+        );
+        return;
+      }
+
+      const rawText = visionData?.responses?.[0]?.fullTextAnnotation?.text || "";
+
+      if (!rawText.trim()) {
+        Alert.alert(
+          "No text found",
+          "SafeCheck could not detect readable text. Try better lighting, hold the camera closer, and make sure the ingredient list is fully visible."
+        );
+        return;
+      }
+
       const parsedList = splitIngredients(rawText);
 
       if (parsedList.length === 0) {
         Alert.alert(
           "No ingredients detected",
-          "Text was found but no comma-separated ingredients could be parsed. Try the Manual input instead."
+          "Text was found, but SafeCheck could not turn it into a usable ingredient list. You can try again or enter ingredients manually."
         );
         return;
       }
 
-      // 4. Send to your existing /api/check endpoint
       setStatusMsg("Analyzing ingredients...");
+
       const res = await api.post("/api/check", {
         ingredients: parsedList,
         profileFlags,
       });
 
-      // 5. Navigate to ResultScreen — same as ManualScreen does
       navigation.navigate("Result", {
         payload: res.data,
         inputIngredients: parsedList,
         profileFlags,
         mode: "ingredients",
       });
-
     } catch (e: any) {
-      Alert.alert("Error", e?.response?.data?.error || e?.message || "Something went wrong.");
+      console.log("Scan error:", e?.response?.data || e?.message || e);
+
+      if (e?.message?.toLowerCase?.().includes("network")) {
+        Alert.alert(
+          "Connection problem",
+          "Could not connect to the server. Please check your internet and backend connection."
+        );
+      } else {
+        Alert.alert(
+          "Scan failed",
+          e?.response?.data?.error ||
+            e?.message ||
+            "Something went wrong while scanning."
+        );
+      }
     } finally {
       setLoading(false);
       setStatusMsg("");
@@ -144,26 +206,33 @@ console.log("Raw text found:", rawText);
   return (
     <ScreenBackground>
       <View style={{ flex: 1 }}>
-        {/* Header */}
         <View style={{ padding: 24, paddingBottom: 12 }}>
-          <Text style={{ color: "#4c217dff", fontSize: 26, fontWeight: "800" }}>
+          <Text
+            style={{
+              color: "#4c217dff",
+              fontSize: 26,
+              fontWeight: "800",
+            }}
+          >
             Scan Ingredients
           </Text>
+
           <Text style={{ marginTop: 6, opacity: 0.75 }}>
-            Point camera at the ingredient list on the label.
+            Point the camera at the ingredient list on the label.
           </Text>
         </View>
 
-        {/* Camera */}
-        <View style={{ flex: 1, marginHorizontal: 24, borderRadius: 20, overflow: "hidden" }}>
-          <CameraView
-            ref={cameraRef}
-            style={{ flex: 1 }}
-            facing="back"
-          />
+        <View
+          style={{
+            flex: 1,
+            marginHorizontal: 24,
+            borderRadius: 20,
+            overflow: "hidden",
+          }}
+        >
+          <CameraView ref={cameraRef} style={{ flex: 1 }} facing="back" />
         </View>
 
-        {/* Tip */}
         <View
           style={{
             marginHorizontal: 24,
@@ -173,12 +242,18 @@ console.log("Raw text found:", rawText);
             backgroundColor: "#EDE7F6",
           }}
         >
-          <Text style={{ color: "#4c217dff", fontSize: 13, opacity: 0.85 }}>
-            💡 Tip: Make sure the full ingredient list is in frame and well-lit for best results.
+          <Text
+            style={{
+              color: "#4c217dff",
+              fontSize: 13,
+              opacity: 0.85,
+              lineHeight: 18,
+            }}
+          >
+            💡 Tip: Make sure the full ingredient list is in frame and well lit for the best result.
           </Text>
         </View>
 
-        {/* Capture button */}
         <View style={{ padding: 24, paddingTop: 16 }}>
           <Pressable
             onPress={handleCapture}
@@ -193,16 +268,23 @@ console.log("Raw text found:", rawText);
             {loading ? (
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <ActivityIndicator color="white" />
-                <Text style={{ color: "white", fontWeight: "800" }}>{statusMsg}</Text>
+                <Text style={{ color: "white", fontWeight: "800" }}>
+                  {statusMsg}
+                </Text>
               </View>
             ) : (
-              <Text style={{ color: "white", fontWeight: "800", fontSize: 16 }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "800",
+                  fontSize: 16,
+                }}
+              >
                 📸 Capture & Analyze
               </Text>
             )}
           </Pressable>
 
-          {/* Manual fallback */}
           <Pressable
             onPress={() => navigation.navigate("Manual", { profileFlags })}
             style={{ marginTop: 10, alignItems: "center" }}
