@@ -9,7 +9,7 @@ export default function BottomNavBar({ navigation, activeTab }: any) {
         navigation.navigate("Main");     
         break;
       case "history":
-        Alert.alert("Coming soon", "History will be added later.");
+        navigation.navigate("History");
         break;
       case "profile":
         navigation.navigate("Profile");

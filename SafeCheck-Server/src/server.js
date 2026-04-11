@@ -247,16 +247,37 @@ app.delete("/api/auth/delete-account", authMiddleware, async (req, res) => {
 app.post("/api/profile", authMiddleware, async (req, res) => {
   try {
     const email = req.user.email;
-    const rest = req.body;
+    const { age, gender, skinConditions, allergies, skinSensitivity, avoidList } = req.body;
 
-    const profiles = db.collection("profiles");
-    await profiles.findOneAndUpdate(
+    const profileData = {
+      email,
+      age: age || "",
+      gender: gender || "",
+      skinSensitivity: skinSensitivity || "",
+      avoidList: Array.isArray(avoidList) ? avoidList : [],
+      skinConditions: {
+        eczema: !!skinConditions?.eczema,
+        rosacea: !!skinConditions?.rosacea,
+        psoriasis: !!skinConditions?.psoriasis,
+        asthma: !!skinConditions?.asthma,
+      },
+      allergies: {
+        sulfates: !!allergies?.sulfates,
+        parabens: !!allergies?.parabens,
+        fragrance: !!allergies?.fragrance,
+        nuts: !!allergies?.nuts,
+        dairy: !!allergies?.dairy,
+      },
+      updatedAt: new Date(),
+    };
+
+    await db.collection("profiles").findOneAndUpdate(
       { email },
-      { $set: { email, ...rest, updatedAt: new Date() } },
-      { upsert: true, returnDocument: "after" }
+      { $set: profileData },
+      { upsert: true }
     );
 
-    const saved = await profiles.findOne({ email });
+    const saved = await db.collection("profiles").findOne({ email });
     res.send(saved);
   } catch (e) {
     res.status(500).send({ error: e.message });
@@ -266,7 +287,17 @@ app.post("/api/profile", authMiddleware, async (req, res) => {
 app.get("/api/profile/me", authMiddleware, async (req, res) => {
   try {
     const data = await db.collection("profiles").findOne({ email: req.user.email });
-    res.send(data || {});
+    
+    // Always return proper structure even if fields missing
+    res.send({
+      age: "",
+      gender: "",
+      skinSensitivity: "",
+      avoidList: [],
+      skinConditions: { eczema: false, rosacea: false, psoriasis: false, asthma: false },
+      allergies: { sulfates: false, parabens: false, fragrance: false, nuts: false, dairy: false },
+      ...data,
+    });
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
@@ -452,6 +483,65 @@ app.post("/api/check", async (req, res) => {
 });
 
 // ------------------------------
+// HISTORY ROUTES
+// ------------------------------
+
+// Save a scan to history
+app.post("/api/history", authMiddleware, async (req, res) => {
+  try {
+    const { mode, productTitle, inputIngredients, overall_risk, results } = req.body;
+
+    const historyEntry = {
+      userId: req.user.userId,
+      email: req.user.email,
+      mode: mode || "ingredients",
+      productTitle: productTitle || null,
+      inputIngredients: inputIngredients || [],
+      overall_risk: overall_risk || "unknown",
+      flaggedCount: (results || []).filter(
+        (r) => r.final_risk === "high" || r.final_risk === "caution"
+      ).length,
+      results: results || [],
+      createdAt: new Date(),
+    };
+
+    const inserted = await db.collection("history").insertOne(historyEntry);
+    res.send({ message: "Saved to history", id: inserted.insertedId });
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+// Get user's history
+app.get("/api/history", authMiddleware, async (req, res) => {
+  try {
+    const entries = await db
+      .collection("history")
+      .find({ userId: req.user.userId })
+      .sort({ createdAt: -1 })
+      .limit(50)
+      .toArray();
+
+    res.send({ history: entries });
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+// Delete a history entry
+app.delete("/api/history/:id", authMiddleware, async (req, res) => {
+  try {
+    await db.collection("history").deleteOne({
+      _id: new ObjectId(req.params.id),
+      userId: req.user.userId,
+    });
+    res.send({ message: "Deleted" });
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+// ------------------------------
 // AI EXPLAINER
 // ------------------------------
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -514,5 +604,34 @@ Rules:
   } catch (e) {
     console.error("Gemini error:", e?.message);
     res.status(500).send({ error: e.message || "Could not generate explanation." });
+  }
+});
+
+// ------------------------------
+// PRODUCT RECOMMENDER
+// ------------------------------
+
+app.get("/api/products/random", (req, res) => {
+  try {
+    if (!productsList || productsList.length === 0) {
+      return res.status(404).send({ error: "No products found" });
+    }
+
+    const randomIndex = Math.floor(Math.random() * productsList.length);
+    const product = productsList[randomIndex];
+
+    res.send({
+      product: {
+        id: product.id,
+        brand: product.brand,
+        name: product.name,
+        category: product.category || "",
+        ingredientsCount: Array.isArray(product.ingredients_inci || product.ingredients)
+          ? (product.ingredients_inci || product.ingredients).length
+          : 0,
+      },
+    });
+  } catch (e) {
+    res.status(500).send({ error: e.message });
   }
 });

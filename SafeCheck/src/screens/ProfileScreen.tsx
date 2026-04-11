@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TextInput, Pressable, Switch, Alert } from "react-native";
+import { View, Text, ScrollView, TextInput, Pressable, Keyboard, Switch, Alert } from "react-native";
 import api from "../services/api";
 import BottomNavBar from "../components/BottomNavBar";
 import ScreenBackground from "../components/ScreenBackground";
@@ -149,6 +149,9 @@ export default function ProfileScreen({ navigation, route }: any) {
           value={age}
           onChangeText={setAge}
           keyboardType="numeric"
+          returnKeyType="done"
+          onSubmitEditing={Keyboard.dismiss}
+          blurOnSubmit={true}
           placeholderTextColor="#9A9A9A"
           style={{
             borderWidth: 1,

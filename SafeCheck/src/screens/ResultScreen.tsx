@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { View, Text, Pressable, ScrollView, Linking, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import api from "../services/api";
 import ScreenBackground from "../components/ScreenBackground";
 
 
@@ -171,6 +172,7 @@ export default function ResultScreen({ navigation, route }: any) {
     const flagged: any[] = [];
     const unknown: any[] = [];
 
+
     for (const r of results) {
       const status = r.status || "";
       const risk = normalizeRisk(r.final_risk ?? r.personalized ?? r.base_risk ?? r.risk);
@@ -182,6 +184,7 @@ export default function ResultScreen({ navigation, route }: any) {
 
     return { safe, flagged, unknown };
   }, [results]);
+
 
   const headerMeta = useMemo(() => getRiskMeta(overallRisk), [overallRisk]);
   const watchOutLines = useMemo(
@@ -196,6 +199,28 @@ export default function ResultScreen({ navigation, route }: any) {
     if (riskyCount === 1) return "We found 1 ingredient that may need extra caution.";
     return `We found ${riskyCount} ingredients that may need extra caution.`;
   }, [riskyCount]);
+
+  // Auto-save to history when result loads
+useEffect(() => {
+  const saveToHistory = async () => {
+    try {
+      await api.post("/api/history", {
+        mode,
+        productTitle: productTitle || null,
+        inputIngredients,
+        overall_risk: overallRisk,
+        results,
+      });
+    } catch (e) {
+      // Fail silently — don't interrupt the user's experience
+      console.log("History save failed:", e);
+    }
+  };
+
+  if (results.length > 0) {
+    saveToHistory();
+  }
+}, []); // Only runs once when screen mounts
 
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (key: string) => setExpanded((p) => ({ ...p, [key]: !p[key] }));
