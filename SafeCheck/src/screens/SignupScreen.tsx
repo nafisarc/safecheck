@@ -106,41 +106,50 @@ export default function SignupScreen({ navigation }: any) {
         },
       ]);
     } catch (e: any) {
-      const status = e?.response?.status;
-      const serverMessage = e?.response?.data?.error;
+        const status = e?.response?.status;
+        const serverMessage = e?.response?.data?.error;
+        const rawMessage = e?.message || "";
 
-      if (status === 409) {
-        Alert.alert(
-          "Account already exists",
-          "An account with this email already exists. Please log in instead."
-        );
-      } else if (status === 400) {
-        Alert.alert(
-          "Invalid details",
-          serverMessage || "Please check your details and try again."
-        );
-      } else if (status === 500) {
-        Alert.alert(
-          "Server error",
-          "Something went wrong on the server. Please try again in a moment."
-        );
-      } else if (e?.message?.toLowerCase().includes("network")) {
-        Alert.alert(
-          "Connection problem",
-          "Could not connect to the server. Please check your internet and server connection."
-        );
-      } else {
-        Alert.alert(
-          "Signup failed",
-          serverMessage || e?.message || "Something went wrong. Please try again."
-        );
-      }
+        if (status === 409) {
+          Alert.alert(
+            "Account already exists",
+            "An account with this email already exists. Please log in instead."
+          );
+        } else if (status === 400) {
+          if (serverMessage?.toLowerCase().includes("full name")) {
+            Alert.alert("Invalid name", serverMessage);
+          } else if (serverMessage?.toLowerCase().includes("email")) {
+            Alert.alert("Invalid email", serverMessage);
+          } else if (serverMessage?.toLowerCase().includes("password")) {
+            Alert.alert("Invalid password", serverMessage);
+          } else {
+            Alert.alert(
+              "Invalid details",
+              serverMessage || "Please check your details and try again."
+            );
+          }
+        } else if (status === 500) {
+          Alert.alert(
+            "Server error",
+            "Something went wrong on the server. Please try again in a moment."
+          );
+        } else if (rawMessage.toLowerCase().includes("network")) {
+          Alert.alert(
+            "Connection problem",
+            "Could not connect to the server. Please check your internet and server connection."
+          );
+        } else {
+          Alert.alert(
+            "Signup failed",
+            serverMessage || rawMessage || "Something went wrong. Please try again."
+          );
+        }
 
-      console.log("Signup error:", e?.response?.data || e.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+        console.log("Signup error:", e?.response?.data || e?.message || e);
+      } finally {
+            setLoading(false);
+          }
+        };
 
   return (
     <ScreenBackground>
