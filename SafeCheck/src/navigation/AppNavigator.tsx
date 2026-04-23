@@ -12,6 +12,8 @@ import SettingsScreen from "../screens/SettingsScreen";
 import ScanScreen from "../screens/ScanScreen";
 import ExplainScreen from "../screens/ExplainScreen";
 import HistoryScreen from "../screens/HistoryScreen";
+import PolicyScreen from "../screens/PrivacyPolicyScreen";
+import AccountInfoScreen from "../screens/AccountInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +50,8 @@ export default function AppNavigator() {
       <Stack.Screen name="Scan" component={ScanScreen} />
       <Stack.Screen name="Explain" component={ExplainScreen} />
       <Stack.Screen name="History" component={HistoryScreen} />
+      <Stack.Screen name="Policy" component={PolicyScreen} />
+      <Stack.Screen name="Account" component={AccountInfoScreen} />
     </Stack.Navigator>
   );
 }

@@ -199,14 +199,6 @@ export default function LoginScreen({ navigation }: any) {
             }}
           />
 
-          <View style={{ alignItems: "flex-end", marginTop: 10 }}>
-            <Pressable>
-              <Text style={{ color: "#8d67b9ff", fontWeight: "700" }}>
-                Forgot password?
-              </Text>
-            </Pressable>
-          </View>
-
           <Pressable
             onPress={onLogin}
             disabled={loading}

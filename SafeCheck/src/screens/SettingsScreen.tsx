@@ -192,7 +192,7 @@ const handleDeleteAccount = () => {
           icon="person-outline"
           title="Account Information"
           subtitle="View your account details"
-          onPress={() => navigation.navigate("AccountInfo")}
+          onPress={() => navigation.navigate("Account")}
         />
 
 
@@ -202,23 +202,7 @@ const handleDeleteAccount = () => {
           icon="shield-outline"
           title="Privacy Policy"
           subtitle="How your data is handled"
-          onPress={() => navigation.navigate("PrivacyPolicy")}
-        />
-
-        {/* Support & About */}
-        <SectionTitle title="Support & About" />
-        <SettingRow
-          icon="mail-outline"
-          title="Contact Us"
-          subtitle="Send feedback or report an issue"
-          onPress={() => navigation.navigate("ContactUs")}
-        />
-        <SettingRow
-          icon="info"
-          iconType="MaterialIcons"
-          title="About SafeCheck"
-          subtitle="Version, purpose, and app information"
-          onPress={() => navigation.navigate("AboutSafeCheck")}
+          onPress={() => navigation.navigate("Policy")}
         />
 
         {/* Actions */}
