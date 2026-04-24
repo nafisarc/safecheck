@@ -126,7 +126,6 @@ export default function ScanScreen({ navigation, route }: any) {
 
       if (!visionRes.ok) {
         const errorText = await visionRes.text();
-        console.log("Vision API error:", visionRes.status, errorText);
 
         Alert.alert(
           "OCR failed",
@@ -139,7 +138,6 @@ export default function ScanScreen({ navigation, route }: any) {
 
       const apiError = visionData?.responses?.[0]?.error;
       if (apiError) {
-        console.log("Vision API response error:", apiError);
 
         Alert.alert(
           "OCR failed",
@@ -182,7 +180,6 @@ export default function ScanScreen({ navigation, route }: any) {
         mode: "ingredients",
       });
     } catch (e: any) {
-      console.log("Scan error:", e?.response?.data || e?.message || e);
 
       if (e?.message?.toLowerCase?.().includes("network")) {
         Alert.alert(

@@ -63,7 +63,6 @@ export default function ProfileScreen({ navigation, route }: any) {
         dairy: profile.allergies?.dairy || false,
       });
     } catch (e: any) {
-      console.log("Load profile error:", e?.response?.data || e.message);
     } finally {
       setLoadingProfile(false);
     }
@@ -103,7 +102,6 @@ export default function ProfileScreen({ navigation, route }: any) {
         "Error",
         e?.response?.data?.error || e.message || "Could not save profile."
       );
-      console.log("Save profile error:", e?.response?.data || e.message);
     }
   };
 

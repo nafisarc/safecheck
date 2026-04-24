@@ -44,7 +44,7 @@ const handleDeleteAccount = () => {
             Alert.alert("Account Deleted", "Your account has been removed.");
             navigation.replace("Signup");
           } catch (e: any) {
-            Alert.alert("Error", e.message || "Could not delete account.");
+            Alert.alert("Error", e.message || "Please try again.");
           }
         },
       },

@@ -105,7 +105,7 @@ export default function ManualScreen({ navigation, route }: any) {
   try {
     setLoading(true);
 
-    // encode just in case the id has spaces/symbols
+    // encode
     const res = await api.get(`/api/products/${encodeURIComponent(id)}/check`);
 
     navigation.navigate("Result", {
@@ -115,7 +115,6 @@ export default function ManualScreen({ navigation, route }: any) {
       productTitle: `${p.brand} ${p.name}`,
     });
   } catch (e: any) {
-    // show backend error instead of generic 404
     const msg = e?.response?.data?.error || e?.message || "Could not load that product.";
     setErrorMsg(msg);
   } finally {

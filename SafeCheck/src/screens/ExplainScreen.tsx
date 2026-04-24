@@ -49,13 +49,12 @@ export default function ExplainScreen({ navigation, route }: any) {
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
 
-    // Scroll to bottom
     setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
 
     try {
       setLoading(true);
 
-      // Only send actual conversation (skip the initial greeting)
+      //  Send actual conversation (skip initial greeting)
       const conversationHistory = updatedMessages.slice(1).map((m) => ({
         role: m.role,
         text: m.text,
@@ -201,7 +200,7 @@ export default function ExplainScreen({ navigation, route }: any) {
             </View>
           )}
 
-          {/* Suggested questions — only show at start */}
+          {/* Suggested questions */}
           {messages.length === 1 && (
             <View style={{ marginTop: 8 }}>
               <Text style={{ color: COLORS.muted, fontSize: 13, marginBottom: 10, fontWeight: "700" }}>

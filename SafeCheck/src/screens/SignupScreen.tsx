@@ -15,7 +15,7 @@ export default function SignupScreen({ navigation }: any) {
   const normalizedEmail = email.trim().toLowerCase();
 
   const nameIsValid = useMemo(() => {
-    // letters + spaces only, at least 2 chars total
+    // letters + spaces only
     return /^[A-Za-z ]+$/.test(normalizedName) && normalizedName.length >= 2;
   }, [normalizedName]);
 
@@ -145,7 +145,6 @@ export default function SignupScreen({ navigation }: any) {
           );
         }
 
-        console.log("Signup error:", e?.response?.data || e?.message || e);
       } finally {
             setLoading(false);
           }

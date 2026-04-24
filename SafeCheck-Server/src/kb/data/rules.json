@@ -1,10 +1,6 @@
 {
   "schema_version": "1.1",
-  "risk_levels": [
-    "low",
-    "caution",
-    "high"
-  ],
+  "risk_levels": ["low", "caution", "high"],
   "risk_rank": {
     "low": 0,
     "caution": 1,
@@ -13,7 +9,7 @@
   "scoring_method": [
     "Start from ingredient.base_risk.",
     "Apply profile-based escalation rules using ingredient.tags.",
-    "Never lower risk (only escalate).",
+    "Never lower risk; only escalate.",
     "Final risk is the highest level triggered.",
     "When a profile rule matches, return personalized reason templates where available.",
     "An explicit Avoid List match can be treated as a higher-concern personalized result for that user."
@@ -49,32 +45,32 @@
         "active": "Because you have sensitive skin, stronger active ingredients may cause stinging or redness."
       }
     },
-    "rosacea": {
+    "very_sensitive": {
       "to_high_if_tags": [
+        "surfactant",
+        "ph_adjuster",
+        "potential_sting",
+        "strong_ph_adjuster",
+        "fragrance",
+        "sensitive_skin_trigger",
+        "sensitizer_flag",
         "aha",
         "bha",
         "exfoliant",
-        "active",
-        "sensitizer_flag",
-        "rosacea_trigger"
-      ],
-      "to_caution_if_tags": [
-        "surfactant",
-        "potential_sting",
-        "strong_ph_adjuster",
-        "fragrance"
+        "active"
       ],
       "reason_templates": {
-        "aha": "Because you have rosacea, AHA exfoliants may increase redness or irritation.",
-        "bha": "Because you have rosacea, BHA exfoliants may increase irritation for you.",
-        "exfoliant": "Because you have rosacea, exfoliating ingredients may be too harsh for your skin.",
-        "active": "Because you have rosacea, stronger active ingredients may trigger discomfort.",
-        "sensitizer_flag": "Because you have rosacea, sensitizing ingredients deserve extra caution.",
-        "rosacea_trigger": "Because you have rosacea, this ingredient may be less comfortable for your skin.",
-        "surfactant": "Because you have rosacea, stronger cleansing agents may feel irritating.",
-        "potential_sting": "Because you have rosacea, this ingredient may increase the chance of stinging.",
-        "strong_ph_adjuster": "Because you have rosacea, strong pH-adjusting ingredients deserve extra caution.",
-        "fragrance": "Because you have rosacea, fragrance may increase the chance of irritation."
+        "surfactant": "Because your profile says very sensitive skin, cleansing agents deserve extra caution for you.",
+        "ph_adjuster": "Because your profile says very sensitive skin, pH-adjusting ingredients deserve extra caution for you.",
+        "potential_sting": "Because your profile says very sensitive skin, this ingredient may sting more easily for you.",
+        "strong_ph_adjuster": "Because your profile says very sensitive skin, stronger pH-adjusting ingredients deserve extra caution.",
+        "fragrance": "Because your profile says very sensitive skin, fragrance may be especially irritating for you.",
+        "sensitive_skin_trigger": "Because your profile says very sensitive skin, this ingredient may be a poor fit for you.",
+        "sensitizer_flag": "Because your profile says very sensitive skin, sensitizing ingredients deserve extra caution.",
+        "aha": "Because your profile says very sensitive skin, AHA exfoliants may be too strong for you.",
+        "bha": "Because your profile says very sensitive skin, BHA exfoliants may be too strong for you.",
+        "exfoliant": "Because your profile says very sensitive skin, exfoliating ingredients may be too harsh for you.",
+        "active": "Because your profile says very sensitive skin, stronger active ingredients may be too harsh for you."
       }
     },
     "eczema": {
@@ -107,6 +103,34 @@
         "fragrance": "Because you have eczema, fragrance may increase the chance of irritation."
       }
     },
+    "rosacea": {
+      "to_high_if_tags": [
+        "aha",
+        "bha",
+        "exfoliant",
+        "active",
+        "sensitizer_flag",
+        "rosacea_trigger"
+      ],
+      "to_caution_if_tags": [
+        "surfactant",
+        "potential_sting",
+        "strong_ph_adjuster",
+        "fragrance"
+      ],
+      "reason_templates": {
+        "aha": "Because you have rosacea, AHA exfoliants may increase redness or irritation.",
+        "bha": "Because you have rosacea, BHA exfoliants may increase irritation for you.",
+        "exfoliant": "Because you have rosacea, exfoliating ingredients may be too harsh for your skin.",
+        "active": "Because you have rosacea, stronger active ingredients may trigger discomfort.",
+        "sensitizer_flag": "Because you have rosacea, sensitizing ingredients deserve extra caution.",
+        "rosacea_trigger": "Because you have rosacea, this ingredient may be less comfortable for your skin.",
+        "surfactant": "Because you have rosacea, stronger cleansing agents may feel irritating.",
+        "potential_sting": "Because you have rosacea, this ingredient may increase the chance of stinging.",
+        "strong_ph_adjuster": "Because you have rosacea, strong pH-adjusting ingredients deserve extra caution.",
+        "fragrance": "Because you have rosacea, fragrance may increase the chance of irritation."
+      }
+    },
     "psoriasis": {
       "to_high_if_tags": [
         "aha",
@@ -137,86 +161,24 @@
         "fragrance": "Because you have psoriasis, fragrance may increase the chance of irritation."
       }
     },
-    "dry": {
-      "to_caution_if_tags": [
-        "surfactant",
-        "exfoliant",
-        "aha",
-        "bha",
-        "potential_sting",
-        "strong_ph_adjuster",
-        "drying"
-      ],
-      "reason_templates": {
-        "surfactant": "Because your skin is dry, stronger cleansing agents may feel more stripping for you.",
-        "exfoliant": "Because your skin is dry, exfoliating ingredients may worsen dryness.",
-        "aha": "Because your skin is dry, AHA ingredients may increase dryness or irritation.",
-        "bha": "Because your skin is dry, BHA ingredients may feel stronger on your skin.",
-        "potential_sting": "Because your skin is dry, this ingredient may sting more easily.",
-        "strong_ph_adjuster": "Because your skin is dry, stronger pH-adjusting ingredients deserve extra caution.",
-        "drying": "Because your skin is dry, drying ingredients may be a worse fit for you."
-      }
-    },
     "fragrance": {
-      "to_high_if_tags": [
-        "fragrance"
-      ],
-      "to_caution_if_tags": [
-        "sensitizer_flag"
-      ],
+      "to_high_if_tags": ["fragrance"],
+      "to_caution_if_tags": ["sensitizer_flag"],
       "reason_templates": {
         "fragrance": "Because you marked fragrance sensitivity, fragranced ingredients may not be a good fit for you.",
         "sensitizer_flag": "Because you marked fragrance sensitivity, sensitizing ingredients deserve extra caution."
       }
     },
     "parabens": {
-      "to_caution_if_tags": [
-        "paraben"
-      ],
+      "to_caution_if_tags": ["paraben"],
       "reason_templates": {
         "paraben": "Because you chose to avoid parabens, this ingredient matches that preference."
       }
     },
     "sulfates": {
-      "to_caution_if_tags": [
-        "sulfate"
-      ],
+      "to_caution_if_tags": ["sulfate"],
       "reason_templates": {
         "sulfate": "Because you chose to avoid sulfates, this ingredient matches that preference."
-      }
-    },
-    "oily": {
-      "notes": "No automatic escalation for oily alone in this MVP."
-    },
-    "acne_prone": {
-      "notes": "No automatic escalation for acne_prone alone in this MVP (avoid false assumptions)."
-    },
-    "very_sensitive": {
-      "to_high_if_tags": [
-        "surfactant",
-        "ph_adjuster",
-        "potential_sting",
-        "strong_ph_adjuster",
-        "fragrance",
-        "sensitive_skin_trigger",
-        "sensitizer_flag",
-        "aha",
-        "bha",
-        "exfoliant",
-        "active"
-      ],
-      "reason_templates": {
-        "surfactant": "Because your profile says very sensitive skin, cleansing agents deserve extra caution for you.",
-        "ph_adjuster": "Because your profile says very sensitive skin, pH-adjusting ingredients deserve extra caution for you.",
-        "potential_sting": "Because your profile says very sensitive skin, this ingredient may sting more easily for you.",
-        "strong_ph_adjuster": "Because your profile says very sensitive skin, stronger pH-adjusting ingredients deserve extra caution.",
-        "fragrance": "Because your profile says very sensitive skin, fragrance may be especially irritating for you.",
-        "sensitive_skin_trigger": "Because your profile says very sensitive skin, this ingredient may be a poor fit for you.",
-        "sensitizer_flag": "Because your profile says very sensitive skin, sensitizing ingredients deserve extra caution.",
-        "aha": "Because your profile says very sensitive skin, AHA exfoliants may be too strong for you.",
-        "bha": "Because your profile says very sensitive skin, BHA exfoliants may be too strong for you.",
-        "exfoliant": "Because your profile says very sensitive skin, exfoliating ingredients may be too harsh for you.",
-        "active": "Because your profile says very sensitive skin, stronger active ingredients may be too harsh for you."
       }
     }
   },

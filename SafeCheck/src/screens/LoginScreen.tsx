@@ -89,7 +89,6 @@ export default function LoginScreen({ navigation }: any) {
         );
       }
 
-      console.log("Login error:", e?.response?.data || e?.message || e);
     } finally {
       setLoading(false);
     }

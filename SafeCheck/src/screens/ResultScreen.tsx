@@ -306,7 +306,6 @@ export default function ResultScreen({ navigation, route }: any) {
           profile_summary: profileSummary,
         });
       } catch (e) {
-        console.log("History save failed:", e);
       }
     };
 

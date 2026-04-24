@@ -66,7 +66,7 @@ export default function HistoryScreen({ navigation }: any) {
     }
   };
 
-  // Refresh every time screen comes into focus
+  // Refresh History
   useFocusEffect(
     useCallback(() => {
       fetchHistory();

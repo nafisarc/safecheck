@@ -37,7 +37,6 @@ const COLORS = {
   outline: "#EEE6FA",
   text: "#221B2D",
   muted: "#6D647A",
-  soft: "#FBFAFF",
   greenBg: "#EAF7EE",
   greenBorder: "#B9E0BB",
   greenText: "#1B5E20",

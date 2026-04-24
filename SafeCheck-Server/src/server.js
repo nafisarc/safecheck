@@ -9,8 +9,11 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
-const JWT_SECRET = process.env.JWT_SECRET || "safecheck_super_secret_key_change_me";
+const JWT_SECRET = process.env.JWT_SECRET;
 
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET is missing in .env");
+}
 app.use(cors());
 app.use(express.json());
 
@@ -26,7 +29,6 @@ const productsList = Array.isArray(productsKbRaw)
 
 let db;
 
-const COLORS_UNUSED_BUT_OK = null;
 
 function normalize(str = "") {
   return String(str).toLowerCase().trim().replace(/\s+/g, " ");
@@ -411,9 +413,7 @@ app.get("/", (_req, res) => {
   res.send("SafeCheck Backend is Running 🚀");
 });
 
-/* -----------------------------
-   AUTH ROUTES
------------------------------ */
+/* AUTH ROUTES */
 
 app.post("/api/auth/signup", async (req, res) => {
   try {
@@ -557,6 +557,7 @@ app.delete("/api/auth/delete-account", authMiddleware, async (req, res) => {
   try {
     await db.collection("users").deleteOne({ _id: new ObjectId(req.user.userId) });
     await db.collection("profiles").deleteOne({ email: req.user.email });
+    await db.collection("history").deleteMany({ userId: req.user.userId });
 
     res.send({ message: "Account deleted successfully" });
   } catch (e) {
@@ -564,9 +565,7 @@ app.delete("/api/auth/delete-account", authMiddleware, async (req, res) => {
   }
 });
 
-/* -----------------------------
-   PROFILE ROUTES
------------------------------ */
+/* PROFILE ROUTES */
 
 app.post("/api/profile", authMiddleware, async (req, res) => {
   try {
@@ -637,11 +636,9 @@ app.get("/api/profile/me", authMiddleware, async (req, res) => {
   }
 });
 
-/* -----------------------------
-   PRODUCT ROUTES
------------------------------ */
+/* PRODUCT ROUTES */
 
-app.get("/api/products/search", (_req, res, next) => next(), (req, res) => {
+app.get("/api/products/search", (req, res) => {
   const q = String(req.query.q || "").toLowerCase().trim();
 
   if (!q) {
@@ -730,9 +727,7 @@ app.get("/api/products/:id/check", optionalAuthMiddleware, async (req, res) => {
   }
 });
 
-/* -----------------------------
-   INGREDIENT CHECK
------------------------------ */
+/* INGREDIENT CHECK */
 
 app.post("/api/check", optionalAuthMiddleware, async (req, res) => {
   try {
@@ -758,9 +753,7 @@ app.post("/api/check", optionalAuthMiddleware, async (req, res) => {
   }
 });
 
-/* -----------------------------
-   HISTORY ROUTES
------------------------------ */
+/* HISTORY ROUTES */
 
 app.post("/api/history", authMiddleware, async (req, res) => {
   try {
@@ -825,9 +818,7 @@ app.delete("/api/history/:id", authMiddleware, async (req, res) => {
   }
 });
 
-/* -----------------------------
-   AI EXPLAINER
------------------------------ */
+/* AI EXPLAINER */
 
 app.post("/api/explain", authMiddleware, async (req, res) => {
   try {
